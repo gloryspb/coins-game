@@ -4,37 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //[serializefield] private float movespeed = 5f; // скорость движения персонажа
 
-    //private rigidbody2d rb; // rigidbody2d компонент персонажа
-    //private vector2 movement; // вектор направления движения
+    [SerializeField] private float moveSpeed = 5f; // 
+    [SerializeField] private Camera mainCamera; // 
 
-    //private void start()
-    //{
-    //    rb = getcomponent<rigidbody2d>();
-    //}
+    private bool isMovingWithMouse = false; // 
 
-    //private void update()
-    //{
-    //    // обрабатываем ввод от игрока
-    //    movement.x = input.getaxisraw("horizontal");
-    //    movement.y = input.getaxisraw("vertical");
-    //}
+    public Animator animator;
 
-    //private void fixedupdate()
-    //{
-    //    // перемещаем персонажа в соответствии с вектором направления движения
-    //    rb.moveposition(rb.position + movement.normalized * movespeed * time.fixeddeltatime);
-    //}
-
-    [SerializeField] private float moveSpeed = 5f; // скорость движения персонажа
-    [SerializeField] private Camera mainCamera; // ссылка на главную камеру
-
-    private bool isMovingWithMouse = false; // переключатель режима движения персонажа
+    private Vector2 moveDirection;
 
     private void Update()
     {
-        // обработка нажатий на левую кнопку мыши
+        //
         if (Input.GetMouseButtonDown(0))
         {
             isMovingWithMouse = true;
@@ -44,32 +26,48 @@ public class PlayerController : MonoBehaviour
             isMovingWithMouse = false;
         }
 
-        // двигаем персонажа в направлении позиции курсора, если левая кнопка мыши зажата
+        // 
         if (isMovingWithMouse)
         {
-            // вычисляем позицию курсора на экране
+            // 
             Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-            // вычисляем направление движения персонажа
-            Vector2 moveDirection = mousePosition - (Vector2)transform.position;
+            //
+            moveDirection = mousePosition - (Vector2)transform.position;
 
-            // нормализуем направление движения и перемещаем персонажа
+            // 
             if (moveDirection.magnitude > 0.1f)
             {
                 transform.Translate(moveDirection.normalized * moveSpeed * Time.deltaTime, Space.World);
             }
         }
-        else // перемещаем персонажа в соответствии с нажатыми клавишами на клавиатуре
+        else // 
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
             if (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f)
             {
-                Vector2 moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
+                moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
+
+                animator.SetFloat("Speed", moveDirection.magnitude);
+
+                animator.SetFloat("Horizontal", horizontalInput);
+                animator.SetFloat("Vertical", verticalInput);
+
                 transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+
+                
+                
             }
+            // animator.SetFloat("Horizontal", horizontalInput);
+            // animator.SetFloat("Vertical", verticalInput);
+            // animator.SetFloat("Speed", moveDirection.sqrMagnitude);
         }
+
+        // 
+
+        
     }
 
 }
