@@ -318,8 +318,8 @@ GameObject:
   - component: {fileID: 846926707}
   - component: {fileID: 846926706}
   - component: {fileID: 846926705}
-  - component: {fileID: 846926708}
   - component: {fileID: 846926704}
+  - component: {fileID: 846926708}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   mainCamera: {fileID: 519420031}
-  animator: {fileID: 846926708}
+  animator: {fileID: 0}
 --- !u!50 &846926705
 Rigidbody2D:
   serializedVersion: 4
@@ -405,7 +405,7 @@ Animator:
   m_GameObject: {fileID: 846926703}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ef1012351481f154f89588d85ceccc8c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 811139c6ea38cc14cb2f2908f858eecc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
