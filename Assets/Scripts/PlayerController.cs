@@ -5,69 +5,39 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] private float moveSpeed = 5f; // 
-    [SerializeField] private Camera mainCamera; // 
+    [SerializeField] private float moveSpeed = 5f; // Скорость перемещения персонажа
 
-    private bool isMovingWithMouse = false; // 
+    private Animator animator; // Ссылка на компонент Animator
 
-    public Animator animator;
-
-    private Vector2 moveDirection;
+    private void Awake()
+    {
+        // Получаем ссылку на компонент Animator
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
-        //
-        if (Input.GetMouseButtonDown(0))
+        // Получаем ввод от игрока по осям X и Y
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        // Создаем вектор направления движения
+        Vector2 direction = new Vector2(horizontalInput, verticalInput).normalized;
+
+        // Если направление не равно нулю, перемещаем персонажа в заданном направлении
+        if (direction.magnitude > 0f)
         {
-            isMovingWithMouse = true;
+            transform.Translate(direction * moveSpeed * Time.deltaTime);
+
+            // Устанавливаем значения переменных аниматора в зависимости от направления движения персонажа
+            animator.SetFloat("Speed", 1f);
+            animator.SetFloat("Vertical", direction.y);
+            animator.SetFloat("Horizontal", direction.x);
         }
-        else if (Input.GetMouseButtonUp(0))
+        else
         {
-            isMovingWithMouse = false;
+            // Если персонаж стоит на месте, останавливаем анимацию ходьбы
+            animator.SetFloat("Speed", 0f);
         }
-
-        // 
-        if (isMovingWithMouse)
-        {
-            // 
-            Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-
-            //
-            moveDirection = mousePosition - (Vector2)transform.position;
-
-            // 
-            if (moveDirection.magnitude > 0.1f)
-            {
-                transform.Translate(moveDirection.normalized * moveSpeed * Time.deltaTime, Space.World);
-            }
-        }
-        else // 
-        {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-
-            if (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f)
-            {
-                moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
-
-                animator.SetFloat("Speed", moveDirection.magnitude);
-
-                animator.SetFloat("Horizontal", horizontalInput);
-                animator.SetFloat("Vertical", verticalInput);
-
-                transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
-
-                
-                
-            }
-            // animator.SetFloat("Horizontal", horizontalInput);
-            // animator.SetFloat("Vertical", verticalInput);
-            // animator.SetFloat("Speed", moveDirection.sqrMagnitude);
-        }
-
-        // 
-
-        
     }
-
 }
