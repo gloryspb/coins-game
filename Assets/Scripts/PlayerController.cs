@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private float _moveSpeed = 5f; // Скорость перемещения персонажа
 
-    [SerializeField] private float moveSpeed = 5f; // Скорость перемещения персонажа
+    private Animator _animator; // Ссылка на компонент Animator
 
-    private Animator animator; // Ссылка на компонент Animator
+    private Vector2 _direction;
 
     private void Awake()
     {
         // Получаем ссылку на компонент Animator
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        // Получаем ввод от игрока по осям X и Y
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        Move();
+    }
 
-        // Создаем вектор направления движения
-        Vector2 direction = new Vector2(horizontalInput, verticalInput).normalized;
-
-        // Если направление не равно нулю, перемещаем персонажа в заданном направлении
-        if (direction.magnitude > 0f)
+    private void Move()
+    {
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
-
-            // Устанавливаем значения переменных аниматора в зависимости от направления движения персонажа
-            animator.SetFloat("Speed", 1f);
-            animator.SetFloat("Vertical", direction.y);
-            animator.SetFloat("Horizontal", direction.x);
+            // Получаем координаты курсора, создаем вектор направления в зависимости от его положения
+            Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _direction = (_targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
         }
         else
         {
-            // Если персонаж стоит на месте, останавливаем анимацию ходьбы
-            animator.SetFloat("Speed", 0f);
+            // Получаем ввод от игрока по осям X и Y
+            float _horizontalInput = Input.GetAxisRaw("Horizontal");
+            float _verticalInput = Input.GetAxisRaw("Vertical");
+            // Создаем вектор направления движения
+            _direction = new Vector2(_horizontalInput, _verticalInput).normalized;
         }
+
+        transform.Translate(_direction * _moveSpeed * Time.deltaTime);
+
+        _animator.SetFloat("Speed", _direction.magnitude);
+        _animator.SetFloat("Vertical", _direction.y);
+        _animator.SetFloat("Horizontal", _direction.x);
     }
 }
