@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f; // Скорость перемещения персонажа
+    [SerializeField] private float _moveSpeed = 5f; 
 
-    private Animator _animator; // Ссылка на компонент Animator
+    private Animator _animator; 
 
     private Vector2 _direction;
 
+    Rigidbody2D _rigidbody;
+
     private void Awake()
     {
-        // Получаем ссылку на компонент Animator
         _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
@@ -25,9 +27,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            // Получаем координаты курсора, создаем вектор направления в зависимости от его положения
             Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _direction = (_targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
+            _direction = (_targetPosition - _rigidbody.position).normalized;
         }
         else
         {
@@ -38,7 +39,9 @@ public class PlayerController : MonoBehaviour
             _direction = new Vector2(_horizontalInput, _verticalInput).normalized;
         }
 
-        transform.Translate(_direction * _moveSpeed * Time.deltaTime);
+        // Тут я решил сменить способ передвижения, ибо первый плохо работает с коллайдерами
+        // transform.Translate(_direction * _moveSpeed * Time.deltaTime);
+        _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
 
         _animator.SetFloat("Speed", _direction.magnitude);
         _animator.SetFloat("Vertical", _direction.y);
