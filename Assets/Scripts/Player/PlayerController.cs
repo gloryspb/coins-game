@@ -44,7 +44,10 @@ public class PlayerController : MonoBehaviour
         _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
 
         _animator.SetFloat("Speed", _direction.magnitude);
-        _animator.SetFloat("Vertical", _direction.y);
-        _animator.SetFloat("Horizontal", _direction.x);
+        if (_direction != new Vector2(0,0))
+        {
+            _animator.SetFloat("Vertical", _direction.y);
+            _animator.SetFloat("Horizontal", _direction.x);
+        }
     }
 }

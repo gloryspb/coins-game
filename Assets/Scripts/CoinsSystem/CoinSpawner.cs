@@ -18,7 +18,7 @@ public class CoinSpawner : MonoBehaviour
 
     private void SpawnCoins(GameObject _prefab, int _count)
     {
-        for (int i = 0; i < _count; i++)
+        for (int i = 0; i < _count;)
         {
             Vector3 _position = transform.position + Random.insideUnitSphere * _spawnRadius;
             _position.z = 0f;
@@ -26,13 +26,9 @@ public class CoinSpawner : MonoBehaviour
             Collider2D[] _colliders = Physics2D.OverlapCircleAll(_position, 0.5f);
             if (_colliders.Length == 0)
             {
-                Instantiate(_prefab, _position, Quaternion.identity);  
+                Instantiate(_prefab, _position, Quaternion.identity); 
+                i++; 
             }
-            else
-            {
-                i--;
-            }
-            
         }
     }
 }

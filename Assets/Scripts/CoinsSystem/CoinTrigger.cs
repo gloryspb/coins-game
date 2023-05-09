@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CoinTrigger : MonoBehaviour
 {
     [SerializeField] private string _coinType;
