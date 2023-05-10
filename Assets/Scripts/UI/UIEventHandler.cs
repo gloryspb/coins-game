@@ -10,7 +10,7 @@ public class UIEventHandler : MonoBehaviour
     public GameObject playerUI;
     public GameObject menuButtons;
     public GameObject exitDialogPanel;
-
+    public SceneLoadManager sceneLoadManager;
 
     void Update()
     {
@@ -47,16 +47,13 @@ public class UIEventHandler : MonoBehaviour
 
     public void Exit()
     {
-        // ExitDialogManager exitDialogManager = new ExitDialogManager();
-        // exitDialogManager.ShowDialog();
         exitDialogPanel.SetActive(true);
         menuButtons.SetActive(false);
-
     }
 
     public void ExitToMainMenu()
     {
-        SceneLoadManager sceneLoadManager = new SceneLoadManager();
+        sceneLoadManager = GetComponent<SceneLoadManager>();
         sceneLoadManager.LoadTargetScene("MainMenu");
         Time.timeScale = 1f;
     }

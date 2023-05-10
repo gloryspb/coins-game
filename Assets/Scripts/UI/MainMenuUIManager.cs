@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    public SceneLoadManager sceneLoadManager;
+
     public void Exit()
     {
         Application.Quit();
@@ -12,7 +14,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void Play()
     {
-        SceneLoadManager sceneLoadManager = new SceneLoadManager();
+        sceneLoadManager = GetComponent<SceneLoadManager>();
         sceneLoadManager.LoadTargetScene("Game");
     }
 }
