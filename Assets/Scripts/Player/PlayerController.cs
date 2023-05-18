@@ -12,6 +12,15 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D _rigidbody;
 
+    public enum ControlType
+    {
+        Mouse,
+        WASD,
+        Both
+    }
+
+    public ControlType controlType = ControlType.Both;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -30,30 +39,33 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float _speedModifier)
     {
+        _direction = Vector2.zero;
 
-
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        if (controlType == ControlType.Mouse || controlType == ControlType.Both)
         {
-            Vector2 _centerScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            Vector2 _mousePosition = Input.mousePosition;
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            {
+                Vector2 _centerScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                Vector2 _mousePosition = Input.mousePosition;
 
-            float _distance = Vector2.Distance(_centerScreen, _mousePosition);
-            float _distancePercent = _distance / (Screen.width / 2f);
+                float _distance = Vector2.Distance(_centerScreen, _mousePosition);
+                float _distancePercent = _distance / (Screen.width / 2f);
 
-            // _speedModifier = 1f + (1.5f - 1f) * (1f - _distancePercent);
-            // Vector2 _cursorOffset = _mousePosition - _centerScreen;
-            // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
-            _speedModifier = _distancePercent < 0.5f ? 1f : 3f;
-            Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _direction = (_targetPosition - _rigidbody.position).normalized;
+                // _speedModifier = 1f + (1.5f - 1f) * (1f - _distancePercent);
+                // Vector2 _cursorOffset = _mousePosition - _centerScreen;
+                // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
+                _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
+                Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _direction = (_targetPosition - _rigidbody.position).normalized;
+            }
         }
-        else
+        if (controlType == ControlType.WASD || controlType == ControlType.Both)
         {
             // Получаем ввод от игрока по осям X и Y
             float _horizontalInput = Input.GetAxisRaw("Horizontal");
             float _verticalInput = Input.GetAxisRaw("Vertical");
             // Создаем вектор направления движения
-            _direction = new Vector2(_horizontalInput, _verticalInput).normalized;
+            _direction += new Vector2(_horizontalInput, _verticalInput).normalized;
         }
 
         // Тут я решил сменить способ передвижения, ибо первый плохо работает с коллайдерами
