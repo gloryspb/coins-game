@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,9 @@ public class UIEventHandler : MonoBehaviour
     public GameObject playerUI;
     public GameObject menuButtons;
     public GameObject exitDialogPanel;
+    public GameObject settingsPanel;
     public SceneLoadManager sceneLoadManager;
+    public PlayerController playerController;
 
     void Update()
     {
@@ -70,5 +73,23 @@ public class UIEventHandler : MonoBehaviour
         pauseMenuUI.SetActive(true);
         menuButtons.SetActive(true);
         exitDialogPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+
+    public void ShowSettingsMenu()
+    {
+        menuButtons.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+
+    public void SetControlMethod(string controlTypeStr)
+    {
+        // почему-то нельзя поставить метод, который принимает значение енума на событие onclick кнопки, поэтому такой костыль
+        playerController.controlType = (PlayerController.ControlType)Enum.Parse(typeof(PlayerController.ControlType), controlTypeStr);
+
+        // Enum.TryParse<PlayerController.ControlType>(controlTypeStr, out PlayerController.ControlType controlType);
+        // playerController.controlType = controlType;
+        
     }
 }

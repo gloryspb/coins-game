@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _direction;
 
-    Rigidbody2D _rigidbody;
+    private Rigidbody2D _rigidbody;
 
     public enum ControlType
     {
@@ -56,20 +56,18 @@ public class PlayerController : MonoBehaviour
                 // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
                 _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
                 Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _direction = (_targetPosition - _rigidbody.position).normalized;
+                _direction = _targetPosition - _rigidbody.position;
+                _direction.Normalize();
             }
         }
         if (controlType == ControlType.WASD || controlType == ControlType.Both)
         {
-            // Получаем ввод от игрока по осям X и Y
             float _horizontalInput = Input.GetAxisRaw("Horizontal");
             float _verticalInput = Input.GetAxisRaw("Vertical");
-            // Создаем вектор направления движения
-            _direction += new Vector2(_horizontalInput, _verticalInput).normalized;
+            _direction += new Vector2(_horizontalInput, _verticalInput);
+            _direction.Normalize();
         }
 
-        // Тут я решил сменить способ передвижения, ибо первый плохо работает с коллайдерами
-        // transform.Translate(_direction * _moveSpeed * Time.deltaTime);
         _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed * _speedModifier);
 
         _animator.SetFloat("Speed", _direction.magnitude);
