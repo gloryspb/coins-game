@@ -44,6 +44,7 @@ public class UIEventHandler : MonoBehaviour
         pauseMenuUI.SetActive(false);
         playerUI.SetActive(true);
         exitDialogPanel.SetActive(false);
+        settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
