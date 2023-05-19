@@ -895,6 +895,8 @@ GameObject:
   - component: {fileID: 830050276}
   - component: {fileID: 830050275}
   - component: {fileID: 830050274}
+  - component: {fileID: 830050277}
+  - component: {fileID: 830050278}
   m_Layer: 5
   m_Name: ButtonWasd
   m_TagString: Untagged
@@ -1017,6 +1019,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830050272}
   m_CullTransparentMesh: 1
+--- !u!114 &830050277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830050272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8bd516d570e14d4daa120146a19b624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controlTypeName: WASD
+  currentControlType: 0
+--- !u!114 &830050278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830050272}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &842366198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,6 +1275,8 @@ GameObject:
   - component: {fileID: 1034989189}
   - component: {fileID: 1034989188}
   - component: {fileID: 1034989187}
+  - component: {fileID: 1034989190}
+  - component: {fileID: 1034989191}
   m_Layer: 5
   m_Name: ButtonMouseWasd
   m_TagString: Untagged
@@ -1366,6 +1399,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034989185}
   m_CullTransparentMesh: 1
+--- !u!114 &1034989190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034989185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8bd516d570e14d4daa120146a19b624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controlTypeName: Both
+  currentControlType: 0
+--- !u!114 &1034989191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034989185}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1112953547
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2287,8 @@ GameObject:
   - component: {fileID: 2121033543}
   - component: {fileID: 2121033542}
   - component: {fileID: 2121033541}
+  - component: {fileID: 2121033544}
+  - component: {fileID: 2121033545}
   m_Layer: 5
   m_Name: ButtonMouse
   m_TagString: Untagged
@@ -2347,3 +2411,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121033539}
   m_CullTransparentMesh: 1
+--- !u!114 &2121033544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121033539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8bd516d570e14d4daa120146a19b624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controlTypeName: Mouse
+  currentControlType: 0
+--- !u!114 &2121033545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121033539}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
