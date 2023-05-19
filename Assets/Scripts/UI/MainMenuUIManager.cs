@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,5 +35,10 @@ public class MainMenuUIManager : MonoBehaviour
     {
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
+    }
+
+    public void SetControlMethod(string controlTypeStr)
+    {
+        PlayerControlTypeHolder.ControlType = (PlayerControlTypeHolder.ControlTypeEnum)Enum.Parse(typeof(PlayerControlTypeHolder.ControlTypeEnum), controlTypeStr);  
     }
 }

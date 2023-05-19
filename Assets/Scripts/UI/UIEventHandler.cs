@@ -93,6 +93,6 @@ public class UIEventHandler : MonoBehaviour
 
     public void SetControlMethod(string controlTypeStr)
     {
-        playerController.controlType = (PlayerController.ControlType)Enum.Parse(typeof(PlayerController.ControlType), controlTypeStr);  
+        PlayerControlTypeHolder.ControlType = (PlayerControlTypeHolder.ControlTypeEnum)Enum.Parse(typeof(PlayerControlTypeHolder.ControlTypeEnum), controlTypeStr);  
     }
 }

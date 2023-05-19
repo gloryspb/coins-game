@@ -12,14 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
-    public enum ControlType
-    {
-        Mouse,
-        WASD,
-        Both
-    }
-
-    public ControlType controlType = ControlType.Both;
+    public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
 
     private void Awake()
     {
@@ -39,9 +32,10 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float _speedModifier)
     {
+        currentControlType = PlayerControlTypeHolder.ControlType;
         _direction = Vector2.zero;
 
-        if (controlType == ControlType.Mouse || controlType == ControlType.Both)
+        if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Mouse || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
         {
             if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
             {
@@ -60,7 +54,7 @@ public class PlayerController : MonoBehaviour
                 _direction.Normalize();
             }
         }
-        if (controlType == ControlType.WASD || controlType == ControlType.Both)
+        if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.WASD || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
         {
             float _horizontalInput = Input.GetAxisRaw("Horizontal");
             float _verticalInput = Input.GetAxisRaw("Vertical");
