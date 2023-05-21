@@ -17,6 +17,7 @@ public class InventoryManager : MonoBehaviour
     public ItemInventory currentItem;
     public RectTransform movingObject;
     public Vector3 offset;
+    public GameObject inventoryBackground;
 
     public void Start()
     {
@@ -38,6 +39,18 @@ public class InventoryManager : MonoBehaviour
         if (currentID != -1)
         {
             MoveObject();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            inventoryBackground.SetActive(!inventoryBackground.activeSelf);
+
+            if (inventoryBackground.activeSelf)
+            {
+                UpdateInventory();
+            }
+
+            Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
         }
     }
 
@@ -138,7 +151,7 @@ public class InventoryManager : MonoBehaviour
     public void MoveObject()
     {
         Vector3 pos = Input.mousePosition + offset;
-        pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z;
+        pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z + 15f;
         movingObject.position = cam.ScreenToWorldPoint(pos);
     }
 

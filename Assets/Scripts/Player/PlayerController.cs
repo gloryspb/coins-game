@@ -5,13 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
-
     private Animator _animator;
-
     private Vector2 _direction;
-
     private Rigidbody2D _rigidbody;
-
     public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
 
     private void Awake()
@@ -35,25 +31,25 @@ public class PlayerController : MonoBehaviour
         currentControlType = PlayerControlTypeHolder.ControlType;
         _direction = Vector2.zero;
 
-        // if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Mouse || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
-        // {
-        //     if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
-        //     {
-        //         Vector2 _centerScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        //         Vector2 _mousePosition = Input.mousePosition;
+        if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Mouse || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
+        {
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            {
+                Vector2 _centerScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                Vector2 _mousePosition = Input.mousePosition;
 
-        //         float _distance = Vector2.Distance(_centerScreen, _mousePosition);
-        //         float _distancePercent = _distance / (Screen.width / 2f);
+                float _distance = Vector2.Distance(_centerScreen, _mousePosition);
+                float _distancePercent = _distance / (Screen.width / 2f);
 
-        //         // _speedModifier = 1f + (1.5f - 1f) * (1f - _distancePercent);
-        //         // Vector2 _cursorOffset = _mousePosition - _centerScreen;
-        //         // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
-        //         _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
-        //         Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //         _direction = _targetPosition - _rigidbody.position;
-        //         _direction.Normalize();
-        //     }
-        // }
+                // _speedModifier = 1f + (1.5f - 1f) * (1f - _distancePercent);
+                // Vector2 _cursorOffset = _mousePosition - _centerScreen;
+                // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
+                _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
+                Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _direction = _targetPosition - _rigidbody.position;
+                _direction.Normalize();
+            }
+        }
         if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.WASD || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
         {
             float _horizontalInput = Input.GetAxisRaw("Horizontal");
