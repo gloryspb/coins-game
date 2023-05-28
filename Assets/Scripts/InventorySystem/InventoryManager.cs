@@ -52,6 +52,7 @@ public class InventoryManager : MonoBehaviour
 
     public void SearchForSameItem(int id, int count)
     {
+        // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
         Item item = data.items[id];
         for (int i = 0; i < maxCount; i++)
         {
@@ -74,7 +75,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-
+        // добавляем предмет в ячейку
         if (count > 0)
         {
             for (int i = 0; i < maxCount; i++)
@@ -88,6 +89,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // добавляем предмет в инвентарь
     public void AddItem(int id, Item item, int count)
     {
         items[id].id = item.id;
@@ -104,6 +106,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // добавляем в конкретную ячейку наш предмет (заменяем)
     public void AddInventoryItem(int id, ItemInventory invItem)
     {
         items[id].id = invItem.id;
@@ -120,6 +123,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // добавляем префабы кнопок в инвентарь при старте
     public void AddGraphics()
     {
         for (int i = 0; i < maxCount; i++)
@@ -143,6 +147,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // обновляем текст количества у предметов в инвентаре и картинку
     public void UpdateInventory()
     {
         for (int i = 0; i < maxCount; i++)
@@ -160,8 +165,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // при нажатии на предмет в инвентаре
     public void SelectObject()
     {
+        // если предмет не выбран, мы его выбираем
         if (currentID == -1)
         {
             currentID = int.Parse(es.currentSelectedGameObject.name);
@@ -169,19 +176,26 @@ public class InventoryManager : MonoBehaviour
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
 
+            //
+            
+
+            // заменяем наш выбранный объект на пустую ячейку
             AddItem(currentID, data.items[0], 0);
         }
         else
         {
+            // если предмет выбран и мы хотим сложить его в другой слот
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
             if (currentItem.id != II.id)
             {
+                // если предметы разные, меняем местами
                 AddInventoryItem(currentID, II);
                 AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
             }
             else
             {
+                // если предметы одинаковые, то складываем их в одну ячейку (до 64)
                 if (II.count + currentItem.count <= 64)
                 {
                     II.count += currentItem.count;
@@ -199,7 +213,8 @@ public class InventoryManager : MonoBehaviour
             movingObject.gameObject.SetActive(false);
         }
     }
-
+    
+    // двигаем нашу картинку с предметом
     public void MoveObject()
     {
         Vector3 pos = Input.mousePosition + offset;
