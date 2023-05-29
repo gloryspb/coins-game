@@ -47,7 +47,7 @@ public class InventoryManager : MonoBehaviour
             MoveObject();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !UIEventHandler.gameIsPaused)
         {
             inventoryBackground.SetActive(!inventoryBackground.activeSelf);
 
@@ -57,6 +57,14 @@ public class InventoryManager : MonoBehaviour
             }
 
             Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
+        }
+
+        if (inventoryBackground.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                inventoryBackground.SetActive(false);
+            }
         }
     }
 
@@ -210,7 +218,7 @@ public class InventoryManager : MonoBehaviour
             {
                 return;
             }
-            
+
             currentID = int.Parse(es.currentSelectedGameObject.name);
             if (currentItem.id == 0)
             {
