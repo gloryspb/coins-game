@@ -19,6 +19,7 @@ public class InventoryManager : MonoBehaviour
     public Vector3 offset;
     public GameObject inventoryBackground;
     public static InventoryManager Instance;
+    private bool isSingleSelection;
 
     public void Start()
     {
@@ -28,6 +29,15 @@ public class InventoryManager : MonoBehaviour
         {
             AddGraphics();
         }
+
+        //
+        SearchForSameItem(1, 64);
+        SearchForSameItem(2, 64);
+        SearchForSameItem(1, 64);
+        SearchForSameItem(2, 64);
+
+        // исправить баг при добавлении больше 64
+        // исправить баг на ескейп
     }
 
     public void Update()
@@ -168,19 +178,61 @@ public class InventoryManager : MonoBehaviour
     // при нажатии на предмет в инвентаре
     public void SelectObject()
     {
+        if (currentID == -1 && items[int.Parse(es.currentSelectedGameObject.name)].id == 0)
+        {
+            return;
+        }
         // если предмет не выбран, мы его выбираем
-        if (currentID == -1)
+        if (currentID == -1 && !Input.GetKey(KeyCode.LeftControl))
         {
             currentID = int.Parse(es.currentSelectedGameObject.name);
             currentItem = CopyInventoryItem(items[currentID]);
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
 
-            //
-            
-
             // заменяем наш выбранный объект на пустую ячейку
             AddItem(currentID, data.items[0], 0);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
+            if (II.count < 1)
+            {
+                return;
+            }
+
+            if (currentItem.id != II.id && currentItem.id != 0)
+            {
+                return;
+            }
+
+            if (currentItem.count >= 64)
+            {
+                return;
+            }
+            
+            currentID = int.Parse(es.currentSelectedGameObject.name);
+            if (currentItem.id == 0)
+            {
+                currentItem = CopyInventoryItem(items[currentID]);
+                currentItem.count = 1;
+            }
+            else
+            {
+                currentItem.count++;
+            }
+
+            II.count--;
+            II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
+
+            movingObject.gameObject.SetActive(true);
+            movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
+
+            if (II.count == 0)
+            {
+                AddItem(currentID, data.items[0], 0);
+            }
+            isSingleSelection = true;
         }
         else
         {
@@ -190,8 +242,26 @@ public class InventoryManager : MonoBehaviour
             if (currentItem.id != II.id)
             {
                 // если предметы разные, меняем местами
-                AddInventoryItem(currentID, II);
-                AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                if (!isSingleSelection)
+                {
+                    AddInventoryItem(currentID, II);
+                    AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                }
+                else
+                {
+                    if (II.id != 0)
+                    {
+                        currentItem.count += items[currentID].count;
+
+                        AddInventoryItem(currentID, II);
+                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                    }
+                    else
+                    {
+                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                    }
+                }
+
             }
             else
             {
@@ -211,9 +281,22 @@ public class InventoryManager : MonoBehaviour
             currentID = -1;
 
             movingObject.gameObject.SetActive(false);
+            currentItem.count = 0;
+            currentItem.id = 0;
+            isSingleSelection = false;
+        }
+
+        //
+        if (currentItem.count != 0 && currentItem.count > 1)
+        {
+            movingObject.GetComponentInChildren<Text>().text = currentItem.count.ToString();
+        }
+        else
+        {
+            movingObject.GetComponentInChildren<Text>().text = "";
         }
     }
-    
+
     // двигаем нашу картинку с предметом
     public void MoveObject()
     {
