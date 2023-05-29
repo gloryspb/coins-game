@@ -14,7 +14,7 @@ public class CoinTrigger : MonoBehaviour
             {
                 case "SilverCoin":
                     ScoreManager.Instance.AddScore(1);
-                    InventoryManager.Instance.SearchForSameItem(1, 1);
+                    InventoryRenderer.Instance.SearchForSameItem(1, 1);
                     Destroy(gameObject);
                     break;
             }
@@ -31,7 +31,7 @@ public class CoinTrigger : MonoBehaviour
                     if (Input.GetKey(KeyCode.E))
                     {
                         ScoreManager.Instance.AddScore(2);
-                        InventoryManager.Instance.SearchForSameItem(2, 1);
+                        InventoryRenderer.Instance.SearchForSameItem(2, 1);
                         Destroy(gameObject);
                     }
                     break;
