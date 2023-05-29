@@ -9,16 +9,6 @@ public class ItemStorage : MonoBehaviour
     public InventoryRenderer inventoryRenderer;
     public float maxWeight;
 
-    public void SetItems(List<ItemInventory> newItems)
-    {
-        items = newItems;
-    }
-
-    public List<ItemInventory> GetItems()
-    {
-        return items;
-    }
-
     void Start()
     {
         while (items.Count < 36)
@@ -29,7 +19,55 @@ public class ItemStorage : MonoBehaviour
             items.Add(item);
         }
     }
+    
+    public void SetItems(List<ItemInventory> newItems)
+    {
+        items = newItems;
+    }
 
+    public List<ItemInventory> GetItems()
+    {
+        return items;
+    }
+
+    public void SearchForSameItem(int id, int count)
+    {
+        // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
+        Item item = data.items[id];
+        for (int i = 0; i < maxCount; i++)
+        {
+            if (items[i].id == item.id)
+            {
+                if (items[0].count < 64)
+                {
+                    items[i].count += count;
+
+                    if (items[i].count > 64)
+                    {
+                        count = items[i].count - 64;
+                        items[i].count = 64;
+                    }
+                    else
+                    {
+                        count = 0;
+                        i = maxCount;
+                    }
+                }
+            }
+        }
+        // добавляем предмет в ячейку
+        if (count > 0)
+        {
+            for (int i = 0; i < maxCount; i++)
+            {
+                if (items[i].id == 0)
+                {
+                    AddItem(i, item, count);
+                    i = maxCount;
+                }
+            }
+        }
+    }
 
     // добавляем предмет класса item в инвентарь
     public void AddItem(int id, Item item, int count)

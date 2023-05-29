@@ -23,24 +23,24 @@ public class InventoryRenderer : MonoBehaviour
     public static InventoryRenderer Instance;
     private bool isSingleSelection;
     public ItemStorage currentStorage;
+    public static bool inventoryIsOpen;
 
     public void Start()
     {
         Instance = this;
+        inventoryIsOpen = false;
 
         if (items.Count == 0)
         {
             AddGraphics();
         }
-
         //
-        SearchForSameItem(1, 64);
-        SearchForSameItem(2, 64);
-        SearchForSameItem(1, 64);
-        SearchForSameItem(2, 64);
+        // SearchForSameItem(1, 64);
+        // SearchForSameItem(2, 64);
+        // SearchForSameItem(1, 64);
+        // SearchForSameItem(2, 64);
 
         // исправить баг при добавлении больше 64
-        // исправить баг на ескейп
     }
 
     public void Update()
@@ -48,31 +48,6 @@ public class InventoryRenderer : MonoBehaviour
         if (currentID != -1)
         {
             MoveObject();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab) && !UIEventHandler.gameIsPaused)
-        {
-            inventoryBackground.SetActive(!inventoryBackground.activeSelf);
-
-            if (inventoryBackground.activeSelf)
-            {
-                UpdateInventory();
-            }
-            else
-            {
-                chestBackground.SetActive(false);
-                CloseInventory();
-            }
-
-            Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
-        }
-
-        if (inventoryBackground.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                inventoryBackground.SetActive(false);
-            }
         }
     }
 
@@ -107,6 +82,7 @@ public class InventoryRenderer : MonoBehaviour
         Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
 
         currentStorage = itemStorage;
+        inventoryIsOpen = true;
     }
 
     public void CloseInventory()
@@ -115,11 +91,24 @@ public class InventoryRenderer : MonoBehaviour
         for (int i = 0; i < 36; i++)
         {
             ItemInventory newItem = new ItemInventory();
-            newItem.id = items [i + 36].id;
+            newItem.id = items[i + 36].id;
             newItem.count = items[i + 36].count;
             newItems.Add(newItem);
         }
         currentStorage.SetItems(newItems);
+
+        inventoryBackground.SetActive(!inventoryBackground.activeSelf);
+
+        if (inventoryBackground.activeSelf)
+        {
+            UpdateInventory();
+        }
+        else
+        {
+            chestBackground.SetActive(false);
+        }
+
+        Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
     }
 
     public void SearchForSameItem(int id, int count)
@@ -200,8 +189,6 @@ public class InventoryRenderer : MonoBehaviour
     {
         for (int i = 0; i < maxCount; i++)
         {
-            // GameObject newItem = Instantiate(gameObjShow, InventoryMainObject.transform) as GameObject;
-
             GameObject newItem;
 
             if (i < maxCount / 2)
