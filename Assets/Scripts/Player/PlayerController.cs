@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         {
             if (InventoryRenderer.inventoryIsOpen)
             {
-                InventoryRenderer.Instance.CloseInventory();
+                InventoryRenderer.Instance.CloseInventory(itemStorage);
             }
             else
             {

@@ -85,9 +85,14 @@ public class InventoryRenderer : MonoBehaviour
         inventoryIsOpen = true;
     }
 
-    public void CloseInventory()
+    public void CloseInventory(ItemStorage itemStorage)
     {
         List<ItemInventory> newItems = new List<ItemInventory>();
+        // int indexOffset = 0;
+        // if (isSecondInventory)
+        // {
+        //     indexOffset = 36;
+        // }
         for (int i = 0; i < 36; i++)
         {
             ItemInventory newItem = new ItemInventory();
@@ -96,6 +101,18 @@ public class InventoryRenderer : MonoBehaviour
             newItems.Add(newItem);
         }
         currentStorage.SetItems(newItems);
+
+        newItems.Clear();
+
+        for (int i = 0; i < 36; i++)
+        {
+            ItemInventory newItem = new ItemInventory();
+            newItem.id = items[i].id;
+            newItem.count = items[i].count;
+            newItems.Add(newItem);
+        }
+        itemStorage.SetItems(newItems);
+        newItems.Clear();
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
 
