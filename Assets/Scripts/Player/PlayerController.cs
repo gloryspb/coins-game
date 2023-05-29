@@ -5,19 +5,31 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
-
     private Animator _animator;
-
     private Vector2 _direction;
-
     private Rigidbody2D _rigidbody;
-
     public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
+    public ItemStorage itemStorage;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (InventoryRenderer.inventoryIsOpen)
+            {
+                InventoryRenderer.Instance.CloseInventory();
+            }
+            else
+            {
+                InventoryRenderer.Instance.OpenInventory(itemStorage, false);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -45,9 +57,8 @@ public class PlayerController : MonoBehaviour
                 float _distance = Vector2.Distance(_centerScreen, _mousePosition);
                 float _distancePercent = _distance / (Screen.width / 2f);
 
-                // _speedModifier = 1f + (1.5f - 1f) * (1f - _distancePercent);
-                // Vector2 _cursorOffset = _mousePosition - _centerScreen;
-                // _speedModifier = 1f + Mathf.Clamp(_cursorOffset.magnitude / (Screen.width / 2), 0f, 1f) * (3f - 1f);
+                // доработать
+
                 _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
                 Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _direction = _targetPosition - _rigidbody.position;

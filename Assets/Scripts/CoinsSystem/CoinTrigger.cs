@@ -13,7 +13,8 @@ public class CoinTrigger : MonoBehaviour
             switch (_coinType)
             {
                 case "SilverCoin":
-                    ScoreManager.Instance.addScore(1);
+                    ScoreManager.Instance.AddScore(1);
+                    InventoryRenderer.Instance.SearchForSameItem(1, 1);
                     Destroy(gameObject);
                     break;
             }
@@ -29,7 +30,8 @@ public class CoinTrigger : MonoBehaviour
                 case "GoldCoin":
                     if (Input.GetKey(KeyCode.E))
                     {
-                        ScoreManager.Instance.addScore(2);
+                        ScoreManager.Instance.AddScore(2);
+                        InventoryRenderer.Instance.SearchForSameItem(2, 1);
                         Destroy(gameObject);
                     }
                     break;
