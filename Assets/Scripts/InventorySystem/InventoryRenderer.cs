@@ -115,7 +115,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
         Item item = data.items[id];
-        for (int i = 0; i < maxCount; i++)
+        for (int i = 0; i < maxCount / 2; i++)
         {
             if (items[i].id == item.id)
             {
@@ -139,7 +139,7 @@ public class InventoryRenderer : MonoBehaviour
         // добавляем предмет в ячейку
         if (count > 0)
         {
-            for (int i = 0; i < maxCount; i++)
+            for (int i = 0; i < maxCount / 2; i++)
             {
                 if (items[i].id == 0)
                 {
