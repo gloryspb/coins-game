@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !UIEventHandler.gameIsPaused)
         {
             if (InventoryRenderer.inventoryIsOpen)
             {

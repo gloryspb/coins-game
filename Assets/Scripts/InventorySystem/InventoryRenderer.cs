@@ -109,6 +109,8 @@ public class InventoryRenderer : MonoBehaviour
         }
 
         Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
+
+        inventoryIsOpen = false;
     }
 
     public void SearchForSameItem(int id, int count)
