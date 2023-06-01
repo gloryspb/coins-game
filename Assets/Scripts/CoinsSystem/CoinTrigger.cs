@@ -5,16 +5,18 @@ using UnityEngine;
 public class CoinTrigger : MonoBehaviour
 {
     [SerializeField] private string _coinType;
-
+    public ItemStorage playerStorage;
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "Player")
         {
+            playerStorage = other.gameObject.GetComponent<ItemStorage>();
             switch (_coinType)
             {
                 case "SilverCoin":
                     ScoreManager.Instance.AddScore(1);
-                    InventoryRenderer.Instance.SearchForSameItem(1, 1);
+                    playerStorage.SearchForSameItem(1, 1);
                     Destroy(gameObject);
                     break;
             }
@@ -23,6 +25,7 @@ public class CoinTrigger : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        playerStorage = other.gameObject.GetComponent<ItemStorage>();
         if (other.gameObject.name == "Player")
         {
             switch (_coinType)
@@ -31,7 +34,7 @@ public class CoinTrigger : MonoBehaviour
                     if (Input.GetKey(KeyCode.E))
                     {
                         ScoreManager.Instance.AddScore(2);
-                        InventoryRenderer.Instance.SearchForSameItem(2, 1);
+                        playerStorage.SearchForSameItem(2, 1);
                         Destroy(gameObject);
                     }
                     break;

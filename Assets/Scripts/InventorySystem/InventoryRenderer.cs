@@ -23,6 +23,7 @@ public class InventoryRenderer : MonoBehaviour
     public static InventoryRenderer Instance;
     private bool isSingleSelection;
     public ItemStorage currentStorage;
+    public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
 
     public void Start()
@@ -58,17 +59,29 @@ public class InventoryRenderer : MonoBehaviour
         int startIndex;
         if (isSecondInventory)
         {
-            startIndex = items.Count - length;
+            if (isSecondInventory)
+            {
+                startIndex = items.Count - length;
+            }
+            else
+            {
+                startIndex = 0;
+            }
+
+            for (int i = startIndex; i < length + startIndex; i++)
+            {
+                items[i].id = newItems[i - startIndex].id;
+                items[i].count = newItems[i - startIndex].count;
+            }
         }
         else
         {
-            startIndex = 0;
-        }
-
-        for (int i = startIndex; i < length + startIndex; i++)
-        {
-            items[i].id = newItems[i - startIndex].id;
-            items[i].count = newItems[i - startIndex].count;
+            List<ItemInventory> playerItems = playerStorage.GetItems();
+            for (int i = 0; i < 36; i++)
+            {
+                items[i].id = playerItems[i].id;
+                items[i].count = playerItems[i].count;
+            }
         }
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
@@ -80,14 +93,21 @@ public class InventoryRenderer : MonoBehaviour
         }
 
         Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
-
-        currentStorage = itemStorage;
+        if (isSecondInventory)
+        {
+            currentStorage = itemStorage;
+        }
+        else
+        {
+            currentStorage = null;
+        }
         inventoryIsOpen = true;
     }
 
     public void CloseInventory()
     {
         List<ItemInventory> newItems = new List<ItemInventory>();
+        List<ItemInventory> playerItems = new List<ItemInventory>();
         for (int i = 0; i < 36; i++)
         {
             ItemInventory newItem = new ItemInventory();
@@ -95,7 +115,18 @@ public class InventoryRenderer : MonoBehaviour
             newItem.count = items[i + 36].count;
             newItems.Add(newItem);
         }
-        currentStorage.SetItems(newItems);
+        for (int i = 0; i < 36; i++)
+        {
+            ItemInventory newItem = new ItemInventory();
+            newItem.id = items[i].id;
+            newItem.count = items[i].count;
+            playerItems.Add(newItem);
+        }
+        if (currentStorage != null)
+        {
+            currentStorage.SetItems(newItems);
+        }
+        playerStorage.SetItems(playerItems);
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
 
