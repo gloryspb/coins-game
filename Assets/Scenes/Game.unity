@@ -11617,6 +11617,7 @@ MonoBehaviour:
   _moveSpeed: 7
   currentControlType: 0
   itemStorage: {fileID: 846926710}
+  cam: {fileID: 519420031}
 --- !u!50 &846926705
 Rigidbody2D:
   serializedVersion: 4

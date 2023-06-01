@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
     public ItemStorage itemStorage;
+    public Camera cam;
 
     private void Awake()
     {
@@ -29,6 +30,14 @@ public class PlayerController : MonoBehaviour
             {
                 InventoryRenderer.Instance.OpenInventory(itemStorage, false);
             }
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            cam.orthographicSize = 7;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            cam.orthographicSize = 5;
         }
     }
 
