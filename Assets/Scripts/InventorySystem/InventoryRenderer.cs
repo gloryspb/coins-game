@@ -67,9 +67,9 @@ public class InventoryRenderer : MonoBehaviour
         // Debug.Log(currenStorageMaxWeight);
         if (currentItem != null)
         {
-            if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight 
-            || currentWeight >= currenStorageMaxWeight 
-            || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight) 
+            if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight
+            || currentWeight >= currenStorageMaxWeight
+            || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight)
             && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
             {
                 storageIsFull = true;
@@ -84,6 +84,7 @@ public class InventoryRenderer : MonoBehaviour
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)
     {
         List<ItemInventory> newItems = itemStorage.GetItems();
+        List<ItemInventory> playerItems = playerStorage.GetItems();
         int length = items.Count / 2;
         int startIndex;
         if (isSecondInventory)
@@ -103,14 +104,11 @@ public class InventoryRenderer : MonoBehaviour
                 items[i].count = newItems[i - startIndex].count;
             }
         }
-        else
+
+        for (int i = 0; i < 36; i++)
         {
-            List<ItemInventory> playerItems = playerStorage.GetItems();
-            for (int i = 0; i < 36; i++)
-            {
-                items[i].id = playerItems[i].id;
-                items[i].count = playerItems[i].count;
-            }
+            items[i].id = playerItems[i].id;
+            items[i].count = playerItems[i].count;
         }
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
