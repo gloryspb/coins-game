@@ -106,6 +106,20 @@ public class InventoryRenderer : MonoBehaviour
 
     public void CloseInventory()
     {
+        if (currentID != -1)
+        {
+            if (isSingleSelection)
+            {
+                currentItem.count += items[currentID].count;
+                isSingleSelection = false;
+            }
+            AddInventoryItem(currentID, currentItem);
+            currentID = -1;
+            movingObject.gameObject.SetActive(false);
+            currentItem.count = 0;
+            currentItem.id = 0;
+        }
+
         List<ItemInventory> newItems = new List<ItemInventory>();
         List<ItemInventory> playerItems = new List<ItemInventory>();
         for (int i = 0; i < 36; i++)
@@ -316,7 +330,14 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             II.count--;
-            II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
+            if (II.count > 1)
+            {
+                II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
+            }
+            else
+            {
+                II.itemGameObj.GetComponentInChildren<Text>().text = "";
+            }
 
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
