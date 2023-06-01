@@ -25,21 +25,27 @@ public class InventoryRenderer : MonoBehaviour
     public ItemStorage currentStorage;
     public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
+    private float currenStorageMaxWeight;
+    public Text volumeText;
+    private float currentWeight;
+    private bool storageIsFull;
 
     public void Start()
     {
         Instance = this;
         inventoryIsOpen = false;
+        currenStorageMaxWeight = 36f;
+
 
         if (items.Count == 0)
         {
             AddGraphics();
         }
         //
-        // SearchForSameItem(1, 64);
-        // SearchForSameItem(2, 64);
-        // SearchForSameItem(1, 64);
-        // SearchForSameItem(2, 64);
+        // playerStorage.SearchForSameItem(1, 1);
+        // playerStorage.SearchForSameItem(2, 1);
+        // playerStorage.SearchForSameItem(1, 63);
+        // playerStorage.SearchForSameItem(2, 63);
 
         // исправить баг при добавлении больше 64
     }
@@ -49,6 +55,29 @@ public class InventoryRenderer : MonoBehaviour
         if (currentID != -1)
         {
             MoveObject();
+        }
+
+        currentWeight = 0;
+        for (int i = 36; i < 72; i++)
+        {
+            currentWeight += data.items[items[i].id].weight * items[i].count;
+        }
+        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
+        // Debug.Log(currentWeight);
+        // Debug.Log(currenStorageMaxWeight);
+        if (currentItem != null)
+        {
+            if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight 
+            || currentWeight >= currenStorageMaxWeight 
+            || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight) 
+            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
+            {
+                storageIsFull = true;
+            }
+            else
+            {
+                storageIsFull = false;
+            }
         }
     }
 
@@ -96,6 +125,8 @@ public class InventoryRenderer : MonoBehaviour
         if (isSecondInventory)
         {
             currentStorage = itemStorage;
+            currenStorageMaxWeight = itemStorage.maxWeight;
+            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
         }
         else
         {
@@ -139,6 +170,7 @@ public class InventoryRenderer : MonoBehaviour
         if (currentStorage != null)
         {
             currentStorage.SetItems(newItems);
+            currenStorageMaxWeight = 36f;
         }
         playerStorage.SetItems(playerItems);
 
@@ -285,6 +317,11 @@ public class InventoryRenderer : MonoBehaviour
     // при нажатии на предмет в инвентаре
     public void SelectObject()
     {
+        if (storageIsFull)
+        {
+            return;
+        }
+
         if (currentID == -1 && items[int.Parse(es.currentSelectedGameObject.name)].id == 0)
         {
             return;
