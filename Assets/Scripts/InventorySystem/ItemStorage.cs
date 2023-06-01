@@ -50,7 +50,7 @@ public class ItemStorage : MonoBehaviour
                     else
                     {
                         count = 0;
-                        i = inventoryRenderer.maxCount;
+                        i = inventoryRenderer.maxCount / 2;
                     }
                 }
             }
@@ -58,12 +58,12 @@ public class ItemStorage : MonoBehaviour
         // добавляем предмет в ячейку
         if (count > 0)
         {
-            for (int i = 0; i < inventoryRenderer.maxCount; i++)
+            for (int i = 0; i < inventoryRenderer.maxCount / 2; i++)
             {
                 if (items[i].id == 0)
                 {
                     AddItem(i, item, count);
-                    i = inventoryRenderer.maxCount;
+                    i = inventoryRenderer.maxCount / 2;
                 }
             }
         }
