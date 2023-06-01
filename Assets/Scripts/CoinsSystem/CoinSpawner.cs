@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CoinSpawner : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private int _bigCoinCount = 10; 
     [SerializeField] private int _smallCoinCount = 10; 
     [SerializeField] private float _spawnRadius = 10f; 
+    [SerializeField] private Tilemap tilemap;
 
     void Start()
     {
@@ -24,7 +26,7 @@ public class CoinSpawner : MonoBehaviour
             _position.z = 0f;
 
             Collider2D[] _colliders = Physics2D.OverlapCircleAll(_position, 0.5f);
-            if (_colliders.Length == 0)
+            if (_colliders.Length == 0 && tilemap.GetTile(Vector3Int.RoundToInt(_position)) != null)
             {
                 Instantiate(_prefab, _position, Quaternion.identity); 
                 i++; 
