@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1935188671, guid: 77159267586b073438874a1d63be71c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemStorage: {fileID: 3510223161987702823}
+  tooltipDisplay: {fileID: 6158411900102207308, guid: 1ae5dab039b3e2d45a5afd7dca470008, type: 3}
 --- !u!114 &3510223161987702823
 MonoBehaviour:
   m_ObjectHideFlags: 0

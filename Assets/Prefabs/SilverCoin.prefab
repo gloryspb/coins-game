@@ -136,3 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coinType: SilverCoin
+  playerStorage: {fileID: 0}
+  tooltipPrefab: {fileID: 8915829314249587085, guid: 1ae5dab039b3e2d45a5afd7dca470008, type: 3}
+  tooltipDisplay: {fileID: 6158411900102207308, guid: 1ae5dab039b3e2d45a5afd7dca470008, type: 3}

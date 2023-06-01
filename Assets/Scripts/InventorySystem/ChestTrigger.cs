@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ChestTrigger : MonoBehaviour
 {
-    // public InventoryRenderer inventoryRenderer;
     public ItemStorage itemStorage;
+    public UITooltipDisplay tooltipDisplay;
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.name == "Player")
@@ -14,6 +14,22 @@ public class ChestTrigger : MonoBehaviour
             {
                 InventoryRenderer.Instance.OpenInventory(itemStorage, true);
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            tooltipDisplay.ShowTooltip(transform);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            tooltipDisplay.HideTooltip();
         }
     }
 }

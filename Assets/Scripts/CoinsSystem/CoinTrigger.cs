@@ -6,7 +6,8 @@ public class CoinTrigger : MonoBehaviour
 {
     [SerializeField] private string _coinType;
     public ItemStorage playerStorage;
-    
+    public UITooltipDisplay tooltipDisplay;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "Player")
@@ -19,6 +20,11 @@ public class CoinTrigger : MonoBehaviour
                     playerStorage.SearchForSameItem(1, 1);
                     Destroy(gameObject);
                     break;
+                case "GoldCoin":
+                    tooltipDisplay.ShowTooltip(transform);
+                    break;
+
+
             }
         }
     }
@@ -36,9 +42,19 @@ public class CoinTrigger : MonoBehaviour
                         ScoreManager.Instance.AddScore(2);
                         playerStorage.SearchForSameItem(2, 1);
                         Destroy(gameObject);
+
+                        tooltipDisplay.HideTooltip();
                     }
                     break;
             }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            tooltipDisplay.HideTooltip();
         }
     }
 }
