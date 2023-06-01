@@ -23,22 +23,29 @@ public class InventoryRenderer : MonoBehaviour
     public static InventoryRenderer Instance;
     private bool isSingleSelection;
     public ItemStorage currentStorage;
+    public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
+    private float currenStorageMaxWeight;
+    public Text volumeText;
+    private float currentWeight;
+    private bool storageIsFull;
 
     public void Start()
     {
         Instance = this;
         inventoryIsOpen = false;
+        currenStorageMaxWeight = 36f;
+
 
         if (items.Count == 0)
         {
             AddGraphics();
         }
         //
-        // SearchForSameItem(1, 64);
-        // SearchForSameItem(2, 64);
-        // SearchForSameItem(1, 64);
-        // SearchForSameItem(2, 64);
+        // playerStorage.SearchForSameItem(1, 1);
+        // playerStorage.SearchForSameItem(2, 1);
+        // playerStorage.SearchForSameItem(1, 63);
+        // playerStorage.SearchForSameItem(2, 63);
 
         // исправить баг при добавлении больше 64
     }
@@ -49,26 +56,58 @@ public class InventoryRenderer : MonoBehaviour
         {
             MoveObject();
         }
+
+        currentWeight = 0;
+        for (int i = 36; i < 72; i++)
+        {
+            currentWeight += data.items[items[i].id].weight * items[i].count;
+        }
+        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
+        
+        if (currentItem != null)
+        {
+            if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight
+            || currentWeight >= currenStorageMaxWeight
+            || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight)
+            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
+            {
+                storageIsFull = true;
+            }
+            else
+            {
+                storageIsFull = false;
+            }
+        }
     }
 
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)
     {
         List<ItemInventory> newItems = itemStorage.GetItems();
+        List<ItemInventory> playerItems = playerStorage.GetItems();
         int length = items.Count / 2;
         int startIndex;
         if (isSecondInventory)
         {
-            startIndex = items.Count - length;
-        }
-        else
-        {
-            startIndex = 0;
+            if (isSecondInventory)
+            {
+                startIndex = items.Count - length;
+            }
+            else
+            {
+                startIndex = 0;
+            }
+
+            for (int i = startIndex; i < length + startIndex; i++)
+            {
+                items[i].id = newItems[i - startIndex].id;
+                items[i].count = newItems[i - startIndex].count;
+            }
         }
 
-        for (int i = startIndex; i < length + startIndex; i++)
+        for (int i = 0; i < 36; i++)
         {
-            items[i].id = newItems[i - startIndex].id;
-            items[i].count = newItems[i - startIndex].count;
+            items[i].id = playerItems[i].id;
+            items[i].count = playerItems[i].count;
         }
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
@@ -80,14 +119,37 @@ public class InventoryRenderer : MonoBehaviour
         }
 
         Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
-
-        currentStorage = itemStorage;
+        if (isSecondInventory)
+        {
+            currentStorage = itemStorage;
+            currenStorageMaxWeight = itemStorage.maxWeight;
+            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
+        }
+        else
+        {
+            currentStorage = null;
+        }
         inventoryIsOpen = true;
     }
 
     public void CloseInventory()
     {
+        if (currentID != -1)
+        {
+            if (isSingleSelection)
+            {
+                currentItem.count += items[currentID].count;
+                isSingleSelection = false;
+            }
+            AddInventoryItem(currentID, currentItem);
+            currentID = -1;
+            movingObject.gameObject.SetActive(false);
+            currentItem.count = 0;
+            currentItem.id = 0;
+        }
+
         List<ItemInventory> newItems = new List<ItemInventory>();
+        List<ItemInventory> playerItems = new List<ItemInventory>();
         for (int i = 0; i < 36; i++)
         {
             ItemInventory newItem = new ItemInventory();
@@ -95,7 +157,19 @@ public class InventoryRenderer : MonoBehaviour
             newItem.count = items[i + 36].count;
             newItems.Add(newItem);
         }
-        currentStorage.SetItems(newItems);
+        for (int i = 0; i < 36; i++)
+        {
+            ItemInventory newItem = new ItemInventory();
+            newItem.id = items[i].id;
+            newItem.count = items[i].count;
+            playerItems.Add(newItem);
+        }
+        if (currentStorage != null)
+        {
+            currentStorage.SetItems(newItems);
+            currenStorageMaxWeight = 36f;
+        }
+        playerStorage.SetItems(playerItems);
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
 
@@ -240,6 +314,11 @@ public class InventoryRenderer : MonoBehaviour
     // при нажатии на предмет в инвентаре
     public void SelectObject()
     {
+        if (storageIsFull)
+        {
+            return;
+        }
+
         if (currentID == -1 && items[int.Parse(es.currentSelectedGameObject.name)].id == 0)
         {
             return;
@@ -285,7 +364,14 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             II.count--;
-            II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
+            if (II.count > 1)
+            {
+                II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
+            }
+            else
+            {
+                II.itemGameObj.GetComponentInChildren<Text>().text = "";
+            }
 
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;

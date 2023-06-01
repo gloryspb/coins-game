@@ -34,7 +34,7 @@ public class ItemStorage : MonoBehaviour
     {
         // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
         Item item = inventoryRenderer.data.items[id];
-        for (int i = 0; i < inventoryRenderer.maxCount; i++)
+        for (int i = 0; i < inventoryRenderer.maxCount / 2; i++)
         {
             if (items[i].id == item.id)
             {
@@ -50,7 +50,7 @@ public class ItemStorage : MonoBehaviour
                     else
                     {
                         count = 0;
-                        i = inventoryRenderer.maxCount;
+                        i = inventoryRenderer.maxCount / 2;
                     }
                 }
             }
@@ -58,12 +58,12 @@ public class ItemStorage : MonoBehaviour
         // добавляем предмет в ячейку
         if (count > 0)
         {
-            for (int i = 0; i < inventoryRenderer.maxCount; i++)
+            for (int i = 0; i < inventoryRenderer.maxCount / 2; i++)
             {
                 if (items[i].id == 0)
                 {
                     AddItem(i, item, count);
-                    i = inventoryRenderer.maxCount;
+                    i = inventoryRenderer.maxCount / 2;
                 }
             }
         }
@@ -74,16 +74,6 @@ public class ItemStorage : MonoBehaviour
     {
         items[id].id = item.id;
         items[id].count = count;
-        items[id].itemGameObj.GetComponent<Image>().sprite = item.img;
-
-        if (count > 1 && item.id != 0)
-        {
-            items[id].itemGameObj.GetComponentInChildren<Text>().text = count.ToString();
-        }
-        else
-        {
-            items[id].itemGameObj.GetComponentInChildren<Text>().text = "";
-        }
     }
 
     // добавляем предмет класса iteminventory в инвентарь

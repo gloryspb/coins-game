@@ -31,13 +31,16 @@ public class PlayerController : MonoBehaviour
                 InventoryRenderer.Instance.OpenInventory(itemStorage, false);
             }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (!UIEventHandler.gameIsPaused && !InventoryRenderer.inventoryIsOpen)
         {
-            cam.orthographicSize = 7;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            cam.orthographicSize = 5;
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                cam.orthographicSize = 7;
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                cam.orthographicSize = 5;
+            }
         }
     }
 
