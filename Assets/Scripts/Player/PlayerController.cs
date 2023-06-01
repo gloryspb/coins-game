@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                InventoryRenderer.Instance.OpenInventory(null, false);
+                InventoryRenderer.Instance.OpenInventory(itemStorage, false);
             }
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0)

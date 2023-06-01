@@ -23,7 +23,6 @@ public class InventoryRenderer : MonoBehaviour
     public static InventoryRenderer Instance;
     private bool isSingleSelection;
     public ItemStorage currentStorage;
-    public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
 
     public void Start()
@@ -54,16 +53,7 @@ public class InventoryRenderer : MonoBehaviour
 
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)
     {
-        List<ItemInventory> newItems;
-        if (itemStorage != null)
-        {
-            newItems = itemStorage.GetItems();
-        }
-        else
-        {
-            newItems = playerStorage.GetItems();
-        }
-        List<ItemInventory> playerItems = playerStorage.GetItems();
+        List<ItemInventory> newItems = itemStorage.GetItems();
         int length = items.Count / 2;
         int startIndex;
         if (isSecondInventory)
@@ -74,22 +64,11 @@ public class InventoryRenderer : MonoBehaviour
         {
             startIndex = 0;
         }
-        if (itemStorage != null)
-        {
-            for (int i = startIndex; i < length + startIndex; i++)
-            {
-                items[i].id = newItems[i - startIndex].id;
-                items[i].count = newItems[i - startIndex].count;
-            }
-        }
 
-        // if (isSecondInventory)
-        // {
-        for (int i = 0; i < 36; i++)
+        for (int i = startIndex; i < length + startIndex; i++)
         {
-            items[i].id = playerItems[i].id;
-            items[i].count = playerItems[i].count;
-            // }
+            items[i].id = newItems[i - startIndex].id;
+            items[i].count = newItems[i - startIndex].count;
         }
 
         inventoryBackground.SetActive(!inventoryBackground.activeSelf);
