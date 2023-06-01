@@ -74,16 +74,6 @@ public class ItemStorage : MonoBehaviour
     {
         items[id].id = item.id;
         items[id].count = count;
-        // items[id].itemGameObj.GetComponent<Image>().sprite = item.img;
-
-        // if (count > 1 && item.id != 0)
-        // {
-        //     items[id].itemGameObj.GetComponentInChildren<Text>().text = count.ToString();
-        // }
-        // else
-        // {
-        //     items[id].itemGameObj.GetComponentInChildren<Text>().text = "";
-        // }
     }
 
     // добавляем предмет класса iteminventory в инвентарь
