@@ -63,8 +63,7 @@ public class InventoryRenderer : MonoBehaviour
             currentWeight += data.items[items[i].id].weight * items[i].count;
         }
         volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
-        // Debug.Log(currentWeight);
-        // Debug.Log(currenStorageMaxWeight);
+        
         if (currentItem != null)
         {
             if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight
