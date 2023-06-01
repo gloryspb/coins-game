@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinTrigger : MonoBehaviour
 {
     [SerializeField] private string _coinType;
-    public ItemStorage playerStorage;
+    private ItemStorage playerStorage;
     public UITooltipDisplay tooltipDisplay;
 
     void OnTriggerEnter2D(Collider2D other)
