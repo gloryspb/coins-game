@@ -11439,7 +11439,7 @@ MonoBehaviour:
   items:
   - id: 0
     name: Empty
-    img: {fileID: 21300000, guid: 2a249c7fdd17104449ce1db31a2ad617, type: 3}
+    img: {fileID: 0}
   - id: 1
     name: SilverCoin
     img: {fileID: 21300000, guid: 9328d3217a34c6e4ba123420ca6dfbce, type: 2}
