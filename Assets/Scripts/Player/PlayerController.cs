@@ -81,6 +81,16 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat("Vertical", _direction.y);
             _animator.SetFloat("Horizontal", _direction.x);
             _animator.speed = _speedModifier != 1 ? 1.4f : 1f;
+            Vector2 Scaler = transform.localScale;
+            if (_direction.x < 0 && Scaler.x > 0)
+            {
+                Scaler.x *= -1;
+            }
+            else if (_direction.x > 0 && Scaler.x < 0)
+            {
+                Scaler.x *= -1;
+            }
+            transform.localScale = Scaler;
         }
     }
 }
