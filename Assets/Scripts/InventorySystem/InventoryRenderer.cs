@@ -36,18 +36,10 @@ public class InventoryRenderer : MonoBehaviour
         inventoryIsOpen = false;
         currenStorageMaxWeight = 36f;
 
-
         if (items.Count == 0)
         {
             AddGraphics();
         }
-        //
-        // playerStorage.SearchForSameItem(1, 1);
-        // playerStorage.SearchForSameItem(2, 1);
-        // playerStorage.SearchForSameItem(1, 63);
-        // playerStorage.SearchForSameItem(2, 63);
-
-        // исправить баг при добавлении больше 64
     }
 
     public void Update()
@@ -86,22 +78,24 @@ public class InventoryRenderer : MonoBehaviour
         List<ItemInventory> playerItems = playerStorage.GetItems();
         int length = items.Count / 2;
         int startIndex;
+
         if (isSecondInventory)
         {
-            if (isSecondInventory)
-            {
-                startIndex = items.Count - length;
-            }
-            else
-            {
-                startIndex = 0;
-            }
+            startIndex = items.Count - length;
 
             for (int i = startIndex; i < length + startIndex; i++)
             {
                 items[i].id = newItems[i - startIndex].id;
                 items[i].count = newItems[i - startIndex].count;
             }
+
+            currentStorage = itemStorage;
+            currenStorageMaxWeight = itemStorage.maxWeight;
+            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
+        }
+        else
+        {
+            currentStorage = null;
         }
 
         for (int i = 0; i < 36; i++)
@@ -119,16 +113,6 @@ public class InventoryRenderer : MonoBehaviour
         }
 
         Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
-        if (isSecondInventory)
-        {
-            currentStorage = itemStorage;
-            currenStorageMaxWeight = itemStorage.maxWeight;
-            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
-        }
-        else
-        {
-            currentStorage = null;
-        }
         inventoryIsOpen = true;
     }
 
