@@ -56,12 +56,15 @@ public class InventoryRenderer : MonoBehaviour
         }
         volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
         
-        if (currentItem != null)
+        if (currentItem != null && es.currentSelectedGameObject != null)
         {
             if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight
             || currentWeight >= currenStorageMaxWeight
             || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight)
-            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
+            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35
+            || (currentID > 35 && data.items[items[int.Parse(es.currentSelectedGameObject.name)].id].weight * 
+            items[int.Parse(es.currentSelectedGameObject.name)].count > 
+            currenStorageMaxWeight - currentWeight && int.Parse(es.currentSelectedGameObject.name) < 36))
             {
                 storageIsFull = true;
             }
