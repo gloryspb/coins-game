@@ -56,7 +56,7 @@ public class InventoryRenderer : MonoBehaviour
         }
         volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
         
-        if (currentItem != null && es.currentSelectedGameObject != null)
+        if (currentItem != null && es.currentSelectedGameObject != null && inventoryIsOpen)
         {
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
