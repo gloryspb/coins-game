@@ -25,7 +25,7 @@ public class InventoryRenderer : MonoBehaviour
     public ItemStorage currentStorage;
     public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
-    private float currentStorageMaxWeight;
+    private float currenStorageMaxWeight;
     public Text volumeText;
     private float currentWeight;
     private bool storageIsFull;
@@ -34,7 +34,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         Instance = this;
         inventoryIsOpen = false;
-        currentStorageMaxWeight = 36f;
+        currenStorageMaxWeight = 36f;
 
         if (items.Count == 0)
         {
@@ -54,15 +54,15 @@ public class InventoryRenderer : MonoBehaviour
         {
             currentWeight += data.items[items[i].id].weight * items[i].count;
         }
-        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
         
         if (currentItem != null && es.currentSelectedGameObject != null)
         {
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
-            if ((data.items[currentItem.id].weight * currentItem.count + currentWeight > currentStorageMaxWeight
+            if ((data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight
             && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
-            || (currentID > 35 && data.items[II.id].weight * II.count > currentStorageMaxWeight - currentWeight 
+            || (currentID > 35 && data.items[II.id].weight * II.count > currenStorageMaxWeight - currentWeight 
             && int.Parse(es.currentSelectedGameObject.name) < 36))
             {
                 storageIsFull = true;
@@ -92,8 +92,8 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             currentStorage = itemStorage;
-            currentStorageMaxWeight = itemStorage.maxWeight;
-            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+            currenStorageMaxWeight = itemStorage.maxWeight;
+            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currenStorageMaxWeight.ToString();
         }
         else
         {
@@ -153,7 +153,7 @@ public class InventoryRenderer : MonoBehaviour
         if (currentStorage != null)
         {
             currentStorage.SetItems(newItems);
-            currentStorageMaxWeight = 36f;
+            currenStorageMaxWeight = 36f;
         }
         playerStorage.SetItems(playerItems);
 
