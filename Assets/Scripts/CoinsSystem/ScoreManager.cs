@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
         _timer = 3f;
     }
 
-    public void addScore(int _count)
+    public void AddScore(int _count)
     {
         _score += _count;
         _scoreCount.text = "Score: " + (_score).ToString();

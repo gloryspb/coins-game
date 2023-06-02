@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f; 
-
-    private Animator _animator; 
-
+    [SerializeField] private float _moveSpeed = 5f;
+    private Animator _animator;
     private Vector2 _direction;
-
-    Rigidbody2D _rigidbody;
+    private Rigidbody2D _rigidbody;
+    public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
+    public ItemStorage itemStorage;
+    public Camera cam;
 
     private void Awake()
     {
@@ -18,36 +18,91 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Move();
+        if (Input.GetKeyDown(KeyCode.Tab) && !UIEventHandler.gameIsPaused)
+        {
+            if (InventoryRenderer.inventoryIsOpen)
+            {
+                InventoryRenderer.Instance.CloseInventory();
+            }
+            else
+            {
+                InventoryRenderer.Instance.OpenInventory(itemStorage, false);
+            }
+        }
+        if (!UIEventHandler.gameIsPaused && !InventoryRenderer.inventoryIsOpen)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                cam.orthographicSize = 7;
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                cam.orthographicSize = 5;
+            }
+        }
     }
 
-    private void Move()
+    private void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        float _speedModifier = 1f;
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _direction = (_targetPosition - _rigidbody.position).normalized;
+            _speedModifier = 1.5f;
         }
-        else
+        Move(_speedModifier);
+    }
+
+    private void Move(float _speedModifier)
+    {
+        currentControlType = PlayerControlTypeHolder.ControlType;
+        _direction = Vector2.zero;
+
+        if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Mouse || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
         {
-            // Получаем ввод от игрока по осям X и Y
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            {
+                Vector2 _centerScreen = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                Vector2 _mousePosition = Input.mousePosition;
+
+                float _distance = Vector2.Distance(_centerScreen, _mousePosition);
+                float _distancePercent = _distance / (Screen.width / 2f);
+
+                // доработать
+
+                _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
+                Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _direction = _targetPosition - _rigidbody.position;
+                _direction.Normalize();
+            }
+        }
+        if (currentControlType == PlayerControlTypeHolder.ControlTypeEnum.WASD || currentControlType == PlayerControlTypeHolder.ControlTypeEnum.Both)
+        {
             float _horizontalInput = Input.GetAxisRaw("Horizontal");
             float _verticalInput = Input.GetAxisRaw("Vertical");
-            // Создаем вектор направления движения
-            _direction = new Vector2(_horizontalInput, _verticalInput).normalized;
+            _direction += new Vector2(_horizontalInput, _verticalInput);
+            _direction.Normalize();
         }
 
-        // Тут я решил сменить способ передвижения, ибо первый плохо работает с коллайдерами
-        // transform.Translate(_direction * _moveSpeed * Time.deltaTime);
-        _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
+        _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed * _speedModifier);
 
         _animator.SetFloat("Speed", _direction.magnitude);
-        if (_direction != new Vector2(0,0))
+        if (_direction != new Vector2(0, 0))
         {
             _animator.SetFloat("Vertical", _direction.y);
             _animator.SetFloat("Horizontal", _direction.x);
+            _animator.speed = _speedModifier != 1 ? 1.4f : 1f;
+            Vector2 Scaler = transform.localScale;
+            if (_direction.x < 0 && Scaler.x > 0)
+            {
+                Scaler.x *= -1;
+            }
+            else if (_direction.x > 0 && Scaler.x < 0)
+            {
+                Scaler.x *= -1;
+            }
+            transform.localScale = Scaler;
         }
     }
 }

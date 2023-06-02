@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8839007645513004555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -136,3 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coinType: SilverCoin
+  playerStorage: {fileID: 0}
+  tooltipPrefab: {fileID: 8915829314249587085, guid: 1ae5dab039b3e2d45a5afd7dca470008, type: 3}
+  tooltipDisplay: {fileID: 6158411900102207308, guid: 1ae5dab039b3e2d45a5afd7dca470008, type: 3}

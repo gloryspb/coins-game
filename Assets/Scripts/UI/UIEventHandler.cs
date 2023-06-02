@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,10 @@ public class UIEventHandler : MonoBehaviour
     public GameObject playerUI;
     public GameObject menuButtons;
     public GameObject exitDialogPanel;
+    public GameObject settingsPanel;
     public SceneLoadManager sceneLoadManager;
+    public PlayerController playerController;
+    [SerializeField] private bool isDebugVersion;
 
     void Update()
     {
@@ -22,6 +26,10 @@ public class UIEventHandler : MonoBehaviour
             }
             else
             {
+                if (InventoryRenderer.inventoryIsOpen)
+                {
+                    InventoryRenderer.Instance.CloseInventory();
+                }
                 Pause();
             }
         }
@@ -41,6 +49,7 @@ public class UIEventHandler : MonoBehaviour
         pauseMenuUI.SetActive(false);
         playerUI.SetActive(true);
         exitDialogPanel.SetActive(false);
+        settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
@@ -56,19 +65,38 @@ public class UIEventHandler : MonoBehaviour
         sceneLoadManager = GetComponent<SceneLoadManager>();
         sceneLoadManager.LoadTargetScene("MainMenu");
         Time.timeScale = 1f;
+        gameIsPaused = false;
     }
 
     public void ExitToDesktop()
     {
         Application.Quit();
-        Debug.Log("went to desktop");
-        // Time.timeScale = 1f;
+        if (isDebugVersion)
+        {
+            Debug.Log("went to desktop");
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     public void BackToPauseMenu()
     {
-        pauseMenuUI.SetActive(true);
         menuButtons.SetActive(true);
         exitDialogPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+
+    public void ShowSettingsMenu()
+    {
+        menuButtons.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+
+    public void SetControlMethod(string controlTypeStr)
+    {
+        PlayerControlTypeHolder.ControlType = (PlayerControlTypeHolder.ControlTypeEnum)Enum.Parse(typeof(PlayerControlTypeHolder.ControlTypeEnum), controlTypeStr);  
     }
 }
