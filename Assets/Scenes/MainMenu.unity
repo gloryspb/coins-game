@@ -2343,7 +2343,7 @@ MonoBehaviour:
   sceneLoadManager: {fileID: 2086616861}
   mainMenuPanel: {fileID: 382489136}
   settingsPanel: {fileID: 842366198}
-  isDebugVersion: 1
+  isDebugVersion: 0
 --- !u!114 &2086616861
 MonoBehaviour:
   m_ObjectHideFlags: 0
