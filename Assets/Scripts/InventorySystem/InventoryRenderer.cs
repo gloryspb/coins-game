@@ -58,13 +58,12 @@ public class InventoryRenderer : MonoBehaviour
         
         if (currentItem != null && es.currentSelectedGameObject != null)
         {
-            if ((data.items[currentItem.id].weight * currentItem.count > currenStorageMaxWeight
-            || currentWeight >= currenStorageMaxWeight
-            || data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight)
-            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35
-            || (currentID > 35 && data.items[items[int.Parse(es.currentSelectedGameObject.name)].id].weight * 
-            items[int.Parse(es.currentSelectedGameObject.name)].count > 
-            currenStorageMaxWeight - currentWeight && int.Parse(es.currentSelectedGameObject.name) < 36))
+            ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
+
+            if ((data.items[currentItem.id].weight * currentItem.count + currentWeight > currenStorageMaxWeight
+            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
+            || (currentID > 35 && data.items[II.id].weight * II.count > currenStorageMaxWeight - currentWeight 
+            && int.Parse(es.currentSelectedGameObject.name) < 36))
             {
                 storageIsFull = true;
             }
