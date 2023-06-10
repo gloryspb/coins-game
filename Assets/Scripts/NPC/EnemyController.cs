@@ -31,10 +31,6 @@ public class EnemyController : MonoBehaviour
     private void Move()
     {
         _direction = Vector2.zero;
-
-        // float _horizontalInput = Input.GetAxisRaw("Horizontal");
-        // float _verticalInput = Input.GetAxisRaw("Vertical");
-        // _direction += new Vector2(_horizontalInput, _verticalInput);
         _timer += Time.deltaTime;
         if (_timer > 2)
         {
@@ -46,17 +42,12 @@ public class EnemyController : MonoBehaviour
             {
                 y *= -1;
             }
-
             _timer = 0;
-
             isTrue = !isTrue;
         }
 
         _direction = new Vector2(x, y);
-
         _direction.Normalize();
-
-
         _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
 
         _animator.SetFloat("Speed", _direction.magnitude);
@@ -75,4 +66,15 @@ public class EnemyController : MonoBehaviour
             transform.localScale = Scaler;
         }
     }
+	
+	public void Death()
+	{
+		_animator.SetTrigger("DeathTrigger");
+		Invoke("DestroyObject", 0.83f);
+	}
+	
+	private void DestroyObject()
+	{
+		Destroy(gameObject);
+	}
 }

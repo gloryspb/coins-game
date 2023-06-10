@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour
     public ItemStorage itemStorage;
     public Camera cam;
     public GameObject attackZone;
+    public static bool isAttack;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         attackZone.SetActive(false);
+        isAttack = false;
     }
 
     private void Update()
@@ -52,10 +54,11 @@ public class PlayerController : MonoBehaviour
 
             Collider2D collider = attackZone.GetComponentInChildren<Collider2D>();
             Vector2 offset = new Vector2();
-            offset.y = _animator.GetFloat("Vertical") * 0.75f;
-            offset.x = _animator.GetFloat("Horizontal") * 0.75f;
+            offset.y = _animator.GetFloat("Vertical") * 0.5f;
+            offset.x = _animator.GetFloat("Horizontal") * 0.5f;
             collider.offset = offset;
-            Invoke("HideTrigger", 1f);
+            isAttack = true;
+            Invoke("HideTrigger", 0.25f);
         }
         else
         {
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
         offset.x = 0f;
         Collider2D collider = attackZone.GetComponentInChildren<Collider2D>();
         collider.offset = offset;
+        isAttack = false;
     }
 
     private void FixedUpdate()
@@ -85,6 +89,10 @@ public class PlayerController : MonoBehaviour
 
     private void Move(float _speedModifier)
     {
+        if (Player.isDead)
+        {
+            return;
+        }
         currentControlType = PlayerControlTypeHolder.ControlType;
         _direction = Vector2.zero;
 

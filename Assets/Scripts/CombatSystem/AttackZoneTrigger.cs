@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AttackZoneTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private EnemyController _enemyController;
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            _enemyController = other.gameObject.GetComponent<EnemyController>();
+            _enemyController.Death();
         }
     }
 }
