@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _moveSpeed = 3f;
     private Animator _animator;
     private Vector2 _direction;
     private Rigidbody2D _rigidbody;
@@ -12,6 +12,9 @@ public class EnemyController : MonoBehaviour
     bool isTrue;
 	private Transform player;
 	public float detectionRadius = 10f;
+	public bool haveAnimation;
+	private SpriteRenderer spriteRenderer;
+	public int HealthPoints = 5;
 
     private void Awake()
     {
@@ -21,6 +24,7 @@ public class EnemyController : MonoBehaviour
         isTrue = false;
 
 		player = GameObject.FindGameObjectWithTag("Player").transform;
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -30,22 +34,6 @@ public class EnemyController : MonoBehaviour
 
     private void Move()
     {
-        //_direction = Vector2.zero;
-        //_timer += Time.deltaTime;
-        //if (_timer > 2)
-        //{
-        //    if (isTrue)
-        //    {
-        //        x *= -1;
-        //    }
-        //    else
-        //    {
-        //        y *= -1;
-        //    }
-        //    _timer = 0;
-        //    isTrue = !isTrue;
-        //}
-
 		float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detectionRadius)
@@ -67,14 +55,7 @@ public class EnemyController : MonoBehaviour
  			_animator.SetFloat("Speed", 0f);
         }
 
-        //_direction = new Vector2(x, y);
-        //_direction.Normalize();
-        //_rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
-
-        //_animator.SetFloat("Speed", _direction.magnitude);
-
-
-        if (_direction != new Vector2(0, 0))
+        if (_direction != new Vector2(0, 0) && !haveAnimation)
         {
             Vector2 Scaler = transform.localScale;
             if (_direction.x < 0 && Scaler.x > 0)
@@ -87,8 +68,31 @@ public class EnemyController : MonoBehaviour
             }
             transform.localScale = Scaler;
         }
+		if (haveAnimation)
+		{
+			_animator.SetFloat("Vertical", _direction.y);
+			_animator.SetFloat("Horizontal", _direction.x);
+		}
+    }
+	public void TakeDamage(int damageTaken)
+    {
+        HealthPoints -= damageTaken;
+        if (HealthPoints <= 0)
+        {
+            Death();
+        }
+		
+		// Debug.Log(HealthPoints);
+
+        spriteRenderer.color = Color.red;
+        Invoke("SetColorWhite", 0.25f);
     }
 	
+	void SetColorWhite()
+    {
+        spriteRenderer.color = Color.white;
+    }
+
 	public void Death()
 	{
 		_animator.SetTrigger("DeathTrigger");

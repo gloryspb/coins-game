@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         HealthPoints = 10;
         isDead = false;
     }
-    public void TakeDamage(int damageTaken, Transform enemyTransform)
+    public void TakeDamage(int damageTaken)
     {
         if (PlayerController.isAttack)
         {

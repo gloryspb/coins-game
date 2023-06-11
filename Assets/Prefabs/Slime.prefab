@@ -87,6 +87,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  detectionRadius: 10
+  haveAnimation: 0
+  HealthPoints: 2
 --- !u!95 &6519141747849072089
 Animator:
   serializedVersion: 5

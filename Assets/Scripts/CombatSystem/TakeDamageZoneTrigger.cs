@@ -10,7 +10,7 @@ public class TakeDamageZoneTrigger : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             _player = gameObject.GetComponentInParent<Player>();
-            _player.TakeDamage(1, other.gameObject.transform);
+            _player.TakeDamage(1);
             // Debug.Log(Player.HealthPoints);
         }
     }

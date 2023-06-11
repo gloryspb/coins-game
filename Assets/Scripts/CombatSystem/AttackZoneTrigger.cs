@@ -5,12 +5,12 @@ using UnityEngine;
 public class AttackZoneTrigger : MonoBehaviour
 {
     private EnemyController _enemyController;
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Enemy")
         {
             _enemyController = other.gameObject.GetComponent<EnemyController>();
-            _enemyController.Death();
+            _enemyController.TakeDamage(1);
         }
     }
 }
