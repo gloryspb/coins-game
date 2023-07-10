@@ -25,16 +25,16 @@ public class InventoryRenderer : MonoBehaviour
     public ItemStorage currentStorage;
     public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
-    private float currentStorageMaxWeight;
+    private float _currentStorageMaxWeight;
     public Text volumeText;
-    private float currentWeight;
-    private bool storageIsFull;
+    private float _currentWeight;
+    private bool _storageIsFull;
 
     public void Start()
     {
         Instance = this;
         inventoryIsOpen = false;
-        currentStorageMaxWeight = 36f;
+        _currentStorageMaxWeight = 36f;
 
         if (items.Count == 0)
         {
@@ -49,27 +49,27 @@ public class InventoryRenderer : MonoBehaviour
             MoveObject();
         }
 
-        currentWeight = 0;
+        _currentWeight = 0;
         for (int i = 36; i < 72; i++)
         {
-            currentWeight += data.items[items[i].id].weight * items[i].count;
+            _currentWeight += data.items[items[i].id].weight * items[i].count;
         }
-        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+        volumeText.text = "Volume: " + _currentWeight.ToString() + "/" + _currentStorageMaxWeight.ToString();
         
         if (currentItem != null && es.currentSelectedGameObject != null && inventoryIsOpen)
         {
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
-            if ((data.items[currentItem.id].weight * currentItem.count + currentWeight > currentStorageMaxWeight
+            if ((data.items[currentItem.id].weight * currentItem.count + _currentWeight > _currentStorageMaxWeight
             && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
-            || (currentID > 35 && data.items[II.id].weight * II.count > currentStorageMaxWeight - currentWeight 
+            || (currentID > 35 && data.items[II.id].weight * II.count > _currentStorageMaxWeight - _currentWeight 
             && int.Parse(es.currentSelectedGameObject.name) < 36))
             {
-                storageIsFull = true;
+                _storageIsFull = true;
             }
             else
             {
-                storageIsFull = false;
+                _storageIsFull = false;
             }
         }
     }
@@ -92,8 +92,8 @@ public class InventoryRenderer : MonoBehaviour
             }
 
             currentStorage = itemStorage;
-            currentStorageMaxWeight = itemStorage.maxWeight;
-            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+            _currentStorageMaxWeight = itemStorage.maxWeight;
+            volumeText.text = "Volume: " + _currentWeight.ToString() + "/" + _currentStorageMaxWeight.ToString();
         }
         else
         {
@@ -153,7 +153,7 @@ public class InventoryRenderer : MonoBehaviour
         if (currentStorage != null)
         {
             currentStorage.SetItems(newItems);
-            currentStorageMaxWeight = 36f;
+            _currentStorageMaxWeight = 36f;
         }
         playerStorage.SetItems(playerItems);
 
@@ -247,7 +247,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // добавляем префабы кнопок в инвентарь при старте
-    public void AddGraphics()
+    private void AddGraphics()
     {
         for (int i = 0; i < maxCount; i++)
         {
@@ -280,7 +280,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // обновляем текст количества у предметов в инвентаре и картинку
-    public void UpdateInventory()
+    private void UpdateInventory()
     {
         for (int i = 0; i < maxCount; i++)
         {
@@ -298,9 +298,9 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // при нажатии на предмет в инвентаре
-    public void SelectObject()
+    private void SelectObject()
     {
-        if (storageIsFull)
+        if (_storageIsFull)
         {
             return;
         }
@@ -432,7 +432,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // двигаем нашу картинку с предметом
-    public void MoveObject()
+    private void MoveObject()
     {
         Vector3 pos = Input.mousePosition + offset;
         pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z + 15f;
