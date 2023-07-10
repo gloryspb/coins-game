@@ -19,8 +19,6 @@ public class BossController : MonoBehaviour
         {
             Death();
         }
-		
-        // Debug.Log(HealthPoints);
 
         spriteRenderer.color = Color.red;
         Invoke("SetColorWhite", 0.25f);

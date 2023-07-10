@@ -14,7 +14,6 @@ public class UIEventHandler : MonoBehaviour
     public GameObject exitDialogPanel;
     public GameObject settingsPanel;
     public GameObject deathScreen;
-    public SceneLoadManager sceneLoadManager;
     public PlayerController playerController;
     public static UIEventHandler Instance;
     [SerializeField] private bool isDebugVersion;
@@ -70,8 +69,9 @@ public class UIEventHandler : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        sceneLoadManager = GetComponent<SceneLoadManager>();
-        sceneLoadManager.LoadTargetScene("MainMenu");
+        // sceneLoadManager = GetComponent<SceneLoadManager>();
+        // sceneLoadManager.LoadTargetScene("MainMenu");
+		SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
@@ -118,7 +118,7 @@ public class UIEventHandler : MonoBehaviour
 
     public void RestartScene()
     {
-        sceneLoadManager = GetComponent<SceneLoadManager>();
+        // sceneLoadManager = GetComponent<SceneLoadManager>();
         Resume();
         Player.isDead = false;
         deathScreen.SetActive(false);
@@ -134,7 +134,7 @@ public class UIEventHandler : MonoBehaviour
     }public void LoadLevel3()
     {
         Resume();
-        Time.timeScale = 1f;
+        Time.timeScale = 1f;	
         SceneManager.LoadScene("Level3");
     }
 }

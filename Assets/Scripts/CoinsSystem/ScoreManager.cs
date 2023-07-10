@@ -8,13 +8,12 @@ public class ScoreManager : MonoBehaviour
     private int _score = 0;
     public static ScoreManager Instance;
     [SerializeField] private Text _scoreCount;
-    float _timer = 0f;
 
     void Start()
     {
         _scoreCount.enabled = true;
+        Invoke("HideScoreBar", 3f);
         Instance = this;
-        _timer = 3f;
     }
 
     public void AddScore(int _count)
@@ -23,19 +22,11 @@ public class ScoreManager : MonoBehaviour
         _scoreCount.text = "Score: " + (_score).ToString();
 
         _scoreCount.enabled = true;
-        _timer = 3f;
+        Invoke("HideScoreBar", 3f);
     }
 
-    void Update()
+    private void HideScoreBar()
     {
-        if (_scoreCount.enabled)
-        {
-            _timer -= Time.deltaTime;
-        }
-
-        if (_timer <= 0f && _scoreCount.enabled)
-        {
-            _scoreCount.enabled = false;
-        }
+        _scoreCount.enabled = false;
     }
 }
