@@ -124,4 +124,17 @@ public class UIEventHandler : MonoBehaviour
         deathScreen.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene("Game");
+    }public void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }public void LoadLevel3()
+    {
+        Resume();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Level3");
+    }
 }
