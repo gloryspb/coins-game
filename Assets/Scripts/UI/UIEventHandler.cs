@@ -34,7 +34,7 @@ public class UIEventHandler : MonoBehaviour
             {
                 if (InventoryRenderer.inventoryIsOpen)
                 {
-                    InventoryRenderer.Instance.CloseInventory();
+                    InventoryRenderer.Inventory.CloseInventory();
                 }
                 Pause();
             }

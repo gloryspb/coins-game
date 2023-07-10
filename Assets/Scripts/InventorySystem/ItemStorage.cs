@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class ItemStorage : MonoBehaviour
 {
     public List<ItemInventory> items = new List<ItemInventory>();
-    public InventoryRenderer inventoryRenderer;
+    [SerializeField] private ItemsDatabase data;
     public float maxWeight;
+    private int _maxCount = 72;
 
     void Start()
     {
@@ -33,8 +34,8 @@ public class ItemStorage : MonoBehaviour
     public void SearchForSameItem(int id, int count)
     {
         // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
-        Item item = inventoryRenderer.data.items[id];
-        for (int i = 0; i < inventoryRenderer.maxCount / 2; i++)
+        Item item = data.items[id];
+        for (int i = 0; i < _maxCount / 2; i++)
         {
             if (items[i].id == item.id)
             {
@@ -50,7 +51,7 @@ public class ItemStorage : MonoBehaviour
                     else
                     {
                         count = 0;
-                        i = inventoryRenderer.maxCount / 2;
+                        i = _maxCount / 2;
                     }
                 }
             }
@@ -58,12 +59,12 @@ public class ItemStorage : MonoBehaviour
         // добавляем предмет в ячейку
         if (count > 0)
         {
-            for (int i = 0; i < inventoryRenderer.maxCount / 2; i++)
+            for (int i = 0; i < _maxCount / 2; i++)
             {
                 if (items[i].id == 0)
                 {
                     AddItem(i, item, count);
-                    i = inventoryRenderer.maxCount / 2;
+                    i = _maxCount / 2;
                 }
             }
         }

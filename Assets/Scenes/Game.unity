@@ -56765,6 +56765,10 @@ PrefabInstance:
       value: Chest (3)
       objectReference: {fileID: 0}
     - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 508538129}
+    - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
       propertyPath: maxWeight
       value: 40
       objectReference: {fileID: 0}
@@ -69128,6 +69132,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+--- !u!1 &508538128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508538130}
+  - component: {fileID: 508538129}
+  m_Layer: 0
+  m_Name: ItemsDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &508538129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508538128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c87fda340fcfd24f89ff02f2e21d174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - id: 0
+    name: Empty
+    img: {fileID: 21300000, guid: b95d82fdeeb7133429d248b70e491cc0, type: 3}
+    weight: 0
+  - id: 1
+    name: SilverCoin
+    img: {fileID: 21300000, guid: 9328d3217a34c6e4ba123420ca6dfbce, type: 2}
+    weight: 1
+  - id: 2
+    name: GoldCoin
+    img: {fileID: 21300000, guid: 2561936da23ae394caa6d7a6e1a023c6, type: 2}
+    weight: 1.5
+--- !u!4 &508538130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508538128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.5620055, y: -5.507479, z: -0.08789141}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509477633
 GameObject:
   m_ObjectHideFlags: 0
@@ -69305,7 +69366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac769bc355e2caf418a141c76c9c09b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
+  _target: {fileID: 846926707}
 --- !u!1 &583012357
 GameObject:
   m_ObjectHideFlags: 0
@@ -70623,7 +70684,6 @@ GameObject:
   m_Component:
   - component: {fileID: 798417295}
   - component: {fileID: 798417294}
-  - component: {fileID: 798417293}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -70631,31 +70691,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &798417293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798417292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c87fda340fcfd24f89ff02f2e21d174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - id: 0
-    name: Empty
-    img: {fileID: 21300000, guid: b95d82fdeeb7133429d248b70e491cc0, type: 3}
-    weight: 0
-  - id: 1
-    name: SilverCoin
-    img: {fileID: 21300000, guid: 9328d3217a34c6e4ba123420ca6dfbce, type: 2}
-    weight: 1
-  - id: 2
-    name: GoldCoin
-    img: {fileID: 21300000, guid: 2561936da23ae394caa6d7a6e1a023c6, type: 2}
-    weight: 1.5
 --- !u!114 &798417294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70668,26 +70703,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac43f287756251e468183012ac2f46ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 798417293}
+  data: {fileID: 508538129}
   items: []
   gameObjShow: {fileID: 6488084879259926145, guid: 66bc4ea9e8596af469946dd097a54f29, type: 3}
   InventoryMainObject: {fileID: 375986156}
   InventorySecondObject: {fileID: 1930923396}
   maxCount: 72
-  cam: {fileID: 519420031}
+  _cam: {fileID: 519420031}
   es: {fileID: 2097057516}
-  currentID: -1
-  currentItem:
-    id: 0
-    itemGameObj: {fileID: 0}
-    count: 0
-  movingObject: {fileID: 241896749}
-  offset: {x: 1, y: -1, z: 0}
-  inventoryBackground: {fileID: 772436335}
-  chestBackground: {fileID: 1033500816}
-  currentStorage: {fileID: 0}
-  playerStorage: {fileID: 846926710}
-  volumeText: {fileID: 1076194412}
+  _movingObject: {fileID: 241896749}
+  _offset: {x: 1, y: -1, z: 0}
+  _inventoryBackground: {fileID: 772436335}
+  _chestBackground: {fileID: 1033500816}
+  _playerStorage: {fileID: 846926710}
+  _volumeText: {fileID: 1076194412}
 --- !u!4 &798417295
 Transform:
   m_ObjectHideFlags: 0
@@ -70921,7 +70950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
-  inventoryRenderer: {fileID: 798417294}
+  data: {fileID: 508538129}
   maxWeight: 0
 --- !u!114 &846926711
 MonoBehaviour:
@@ -73362,6 +73391,10 @@ PrefabInstance:
       value: Chest (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 508538129}
+    - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
       propertyPath: maxWeight
       value: 50
       objectReference: {fileID: 0}
@@ -73913,7 +73946,6 @@ MonoBehaviour:
   exitDialogPanel: {fileID: 1774858626}
   settingsPanel: {fileID: 1010244701}
   deathScreen: {fileID: 1665299411}
-  sceneLoadManager: {fileID: 1154416017}
   playerController: {fileID: 846926704}
   isDebugVersion: 0
 --- !u!114 &1154416017
@@ -73939,6 +73971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 508538129}
     - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
       propertyPath: maxWeight
       value: 20
@@ -118562,6 +118598,10 @@ PrefabInstance:
       value: Chest (2)
       objectReference: {fileID: 0}
     - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 508538129}
+    - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
       propertyPath: maxWeight
       value: 30
       objectReference: {fileID: 0}
@@ -120721,6 +120761,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest
       objectReference: {fileID: 0}
+    - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 508538129}
     - target: {fileID: 3510223161987702823, guid: 9b3cc885008043c4199dbd09412ad8e2, type: 3}
       propertyPath: maxWeight
       value: 10
