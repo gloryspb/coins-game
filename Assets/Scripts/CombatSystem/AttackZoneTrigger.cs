@@ -11,13 +11,13 @@ public class AttackZoneTrigger : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             _enemyController = other.gameObject.GetComponent<EnemyController>();
-            _enemyController.TakeDamage(1);
+            _enemyController.TakeDamage(1f);
         }
 
 		if (other.gameObject.tag == "Boss")
         {
             _bossController = other.gameObject.GetComponent<BossController>();
-            _bossController.TakeDamage(1);
+            _bossController.TakeDamage(1f);
         }
     }
 }

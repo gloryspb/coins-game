@@ -10,7 +10,7 @@ public class HealthBarRenderer : MonoBehaviour
     {
         foreach (var _gameObject in gameObjects)
         {
-            if (int.Parse(_gameObject.name) <= player.HealthPoints)
+            if (int.Parse(_gameObject.name) <= player.healthPoints)
             {
                 ActiveHealth(_gameObject);
             }

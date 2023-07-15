@@ -56002,6 +56002,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (4)
@@ -56009,6 +56013,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -56054,7 +56062,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &132161519
 GameObject:
@@ -57284,6 +57293,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (8)
@@ -57291,6 +57304,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -57336,7 +57353,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &290696424
 GameObject:
@@ -69078,6 +69096,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (2)
@@ -69085,6 +69107,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -69130,7 +69156,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &508538128
 GameObject:
@@ -70146,9 +70173,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -70194,7 +70229,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &704762787
 GameObject:
@@ -70703,8 +70739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac43f287756251e468183012ac2f46ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 508538129}
   items: []
+  data: {fileID: 508538129}
   gameObjShow: {fileID: 6488084879259926145, guid: 66bc4ea9e8596af469946dd097a54f29, type: 3}
   InventoryMainObject: {fileID: 375986156}
   InventorySecondObject: {fileID: 1930923396}
@@ -70857,6 +70893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 7
+  _player: {fileID: 846926711}
   currentControlType: 0
   itemStorage: {fileID: 846926710}
   cam: {fileID: 519420031}
@@ -70964,10 +71001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38276d7093f85204490d6857b466cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
-  HealthPoints: 0
-  knockbackForce: 5
-  knockbackDistance: 2
+  damage: 0
+  healthPoints: 0
 --- !u!1 &856595181
 GameObject:
   m_ObjectHideFlags: 0
@@ -116532,9 +116567,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -116580,7 +116623,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1001 &1204163603
 PrefabInstance:
@@ -116589,6 +116633,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (7)
@@ -116596,6 +116644,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -116641,7 +116693,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1221856062
 GameObject:
@@ -117137,6 +117190,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (6)
@@ -117144,6 +117201,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -117189,7 +117250,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1398022119
 GameObject:
@@ -117693,9 +117755,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -117741,7 +117811,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1524955719
 GameObject:
@@ -119072,9 +119143,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -119120,7 +119199,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1821085277
 GameObject:
@@ -119448,6 +119528,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (3)
@@ -119455,6 +119539,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -119500,7 +119588,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1894121331
 GameObject:
@@ -119593,6 +119682,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (5)
@@ -119600,6 +119693,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -119645,7 +119742,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1898077201
 GameObject:
@@ -120186,6 +120284,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime (1)
@@ -120193,6 +120295,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -120238,7 +120344,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
 --- !u!1 &1985365189
 GameObject:
@@ -120830,6 +120937,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072099, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -120837,6 +120948,10 @@ PrefabInstance:
     - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6519141747849072100, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
+      propertyPath: healthPoints
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6519141747849072103, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
       propertyPath: m_RootOrder
@@ -120882,5 +120997,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6519141747849072088, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 465c38b84f02cb345a054f3ecd4820c5, type: 3}

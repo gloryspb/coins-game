@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
+	[SerializeField] private Player _player;
     private Animator _animator;
     private Vector2 _direction;
     private Rigidbody2D _rigidbody;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
             collider.offset = offset;
             isAttack = true;
             Invoke("HideTrigger", 0.25f);
+			_player.Attack();
         }
         else
         {

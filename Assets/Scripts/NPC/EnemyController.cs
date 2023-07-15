@@ -14,7 +14,8 @@ public class EnemyController : MonoBehaviour
 	public float detectionRadius = 10f;
 	public bool haveAnimation;
 	private SpriteRenderer spriteRenderer;
-	public int HealthPoints = 5;
+	public float healthPoints = 1f; // меняем инт на флоат
+	public bool isCombatMode = false;
 
     private void Awake()
     {
@@ -47,12 +48,14 @@ public class EnemyController : MonoBehaviour
 			}
             _rigidbody.velocity = _direction * _moveSpeed;
  			_animator.SetFloat("Speed", _direction.magnitude);
+			isCombatMode = true;
         }
         else
         {
             // Если игрок не в радиусе обнаружения или не активен, останавливаемся
             _rigidbody.velocity = Vector2.zero;
  			_animator.SetFloat("Speed", 0f);
+			isCombatMode = false;
         }
 
         if (_direction != new Vector2(0, 0) && !haveAnimation)
@@ -74,10 +77,10 @@ public class EnemyController : MonoBehaviour
 			_animator.SetFloat("Horizontal", _direction.x);
 		}
     }
-	public void TakeDamage(int damageTaken)
+	public void TakeDamage(float damageTaken)
     {
-        HealthPoints -= damageTaken;
-        if (HealthPoints <= 0)
+        healthPoints -= damageTaken;
+        if (healthPoints <= 0f)
         {
             Death();
         }
@@ -96,6 +99,7 @@ public class EnemyController : MonoBehaviour
 	public void Death()
 	{
 		_animator.SetTrigger("DeathTrigger");
+		_rigidbody.velocity = Vector2.zero;
 		Invoke("DestroyObject", 0.83f);
 	}
 	

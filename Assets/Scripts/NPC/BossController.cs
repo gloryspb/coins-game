@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    public int HealthPoints = 10;
+    public float healthPoints = 10f;
     private SpriteRenderer spriteRenderer;
     private Animator _animator;
     private void Awake()
@@ -12,10 +12,10 @@ public class BossController : MonoBehaviour
         _animator = GetComponent<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
-    public void TakeDamage(int damageTaken)
+    public void TakeDamage(float damageTaken)
     {
-        HealthPoints -= damageTaken;
-        if (HealthPoints <= 0)
+        healthPoints -= damageTaken;
+        if (healthPoints <= 0f)
         {
             Death();
         }
