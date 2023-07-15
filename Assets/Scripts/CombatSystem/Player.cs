@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
 
     private void RegenHealthPoints()
     {
+        if (_isCombatMode) _timer = 0f;
         _timer += Time.deltaTime;
         if (_timer >= 1f)
         {
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
     private void UpdateCombatMode()
     {
         GameObject closestEnemy = FindClosestEnemy(11f);
-        // Debug.Log(closestEnemy);
+        Debug.Log(_isCombatMode);
         if (closestEnemy != null)
         {
             if (closestEnemy.GetComponent<EnemyController>().isCombatMode == true)
@@ -65,8 +66,12 @@ public class Player : MonoBehaviour
             }
             else
             {
-                _isCombatMode = false;
+                Invoke("ExitCombatMode", 5f);
             }
+        }
+        else
+        {
+            Invoke("ExitCombatMode", 5f);
         }
 
         // Debug.Log(closestEnemy.GetComponent<EnemyController>().isCombatMode);
@@ -86,14 +91,14 @@ public class Player : MonoBehaviour
         spriteRenderer.color = Color.red;
         Invoke("SetColorWhite", 0.25f);
         
-        _isCombatMode = true;
-        Invoke("ExitCombatMode", 5f);
+        // _isCombatMode = true;
+        // Invoke("ExitCombatMode", 5f);
     }
 
     public void Attack()
     {
-        _isCombatMode = true;
-        Invoke("ExitCombatMode", 5f);
+        // _isCombatMode = true;
+        // Invoke("ExitCombatMode", 5f);
     }
 
     private void ExitCombatMode()
