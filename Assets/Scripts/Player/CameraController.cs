@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform target; 
-    // [SerializeField] private Vector3 offset = new Vector3(0f, 0f, -10f); 
-
+    [SerializeField] private Transform _target;
+    
     private void LateUpdate()
     {
-        // Vector3 desiredPosition = target.position + offset;
-        // transform.position = desiredPosition;
-
-        transform.position = target.position + new Vector3(0f, 0f, -10f);
+        transform.position = _target.position + new Vector3(0f, 0f, -10f);
     }
 }

@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _moveSpeed = 3f;
     private Animator _animator;
     private Vector2 _direction;
     private Rigidbody2D _rigidbody;
     private float _timer;
-    float x;
-    float y;
     bool isTrue;
+	private Transform player;
+	public float detectionRadius = 10f;
+	public bool haveAnimation;
+	private SpriteRenderer spriteRenderer;
+	public float healthPoints = 1f; // меняем инт на флоат
+	public bool isCombatMode = false;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
 
-        x = 1;
-        y = 1;
-        isTrue = true;
+        isTrue = false;
+
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -30,38 +35,30 @@ public class EnemyController : MonoBehaviour
 
     private void Move()
     {
-        _direction = Vector2.zero;
+		float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // float _horizontalInput = Input.GetAxisRaw("Horizontal");
-        // float _verticalInput = Input.GetAxisRaw("Vertical");
-        // _direction += new Vector2(_horizontalInput, _verticalInput);
-        _timer += Time.deltaTime;
-        if (_timer > 2)
+        if (distanceToPlayer <= detectionRadius)
         {
-            if (isTrue)
-            {
-                x *= -1;
-            }
-            else
-            {
-                y *= -1;
-            }
-
-            _timer = 0;
-
-            isTrue = !isTrue;
+            // Если игрок в радиусе обнаружения, двигаемся в его сторону
+            _direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
+			if (isTrue)
+			{
+				_direction.x *= -1;
+				_direction.y *= -1;
+			}
+            _rigidbody.velocity = _direction * _moveSpeed;
+ 			_animator.SetFloat("Speed", _direction.magnitude);
+			isCombatMode = true;
+        }
+        else
+        {
+            // Если игрок не в радиусе обнаружения или не активен, останавливаемся
+            _rigidbody.velocity = Vector2.zero;
+ 			_animator.SetFloat("Speed", 0f);
+			isCombatMode = false;
         }
 
-        _direction = new Vector2(x, y);
-
-        _direction.Normalize();
-
-
-        _rigidbody.MovePosition(_rigidbody.position + _direction * Time.deltaTime * _moveSpeed);
-
-        _animator.SetFloat("Speed", _direction.magnitude);
-
-        if (_direction != new Vector2(0, 0))
+        if (_direction != new Vector2(0, 0) && !haveAnimation)
         {
             Vector2 Scaler = transform.localScale;
             if (_direction.x < 0 && Scaler.x > 0)
@@ -74,5 +71,54 @@ public class EnemyController : MonoBehaviour
             }
             transform.localScale = Scaler;
         }
+		if (haveAnimation)
+		{
+			_animator.SetFloat("Vertical", _direction.y);
+			_animator.SetFloat("Horizontal", _direction.x);
+		}
     }
+	public void TakeDamage(float damageTaken)
+    {
+        healthPoints -= damageTaken;
+        if (healthPoints <= 0f)
+        {
+            Death();
+        }
+		
+		// Debug.Log(HealthPoints);
+
+        spriteRenderer.color = Color.red;
+        Invoke("SetColorWhite", 0.25f);
+    }
+	
+	void SetColorWhite()
+    {
+        spriteRenderer.color = Color.white;
+    }
+
+	public void Death()
+	{
+		_animator.SetTrigger("DeathTrigger");
+		_rigidbody.velocity = Vector2.zero;
+		Invoke("DestroyObject", 0.83f);
+	}
+	
+	private void DestroyObject()
+	{
+		Destroy(gameObject);
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isTrue = true;
+			Invoke("SetFalse", 0.5f);
+        }
+    }
+
+	private void SetFalse()
+	{
+		isTrue = false;
+	}
 }

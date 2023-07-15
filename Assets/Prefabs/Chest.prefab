@@ -141,4 +141,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items: []
   inventoryRenderer: {fileID: 0}
+  data: {fileID: 0}
   maxWeight: 0

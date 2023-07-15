@@ -5,17 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
+	[SerializeField] private Player _player;
     private Animator _animator;
     private Vector2 _direction;
     private Rigidbody2D _rigidbody;
     public PlayerControlTypeHolder.ControlTypeEnum currentControlType;
     public ItemStorage itemStorage;
     public Camera cam;
+    public GameObject attackZone;
+    public static bool isAttack;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        attackZone.SetActive(false);
+        isAttack = false;
     }
 
     private void Update()
@@ -24,11 +29,11 @@ public class PlayerController : MonoBehaviour
         {
             if (InventoryRenderer.inventoryIsOpen)
             {
-                InventoryRenderer.Instance.CloseInventory();
+                InventoryRenderer.Inventory.CloseInventory();
             }
             else
             {
-                InventoryRenderer.Instance.OpenInventory(itemStorage, false);
+                InventoryRenderer.Inventory.OpenInventory(itemStorage, false);
             }
         }
         if (!UIEventHandler.gameIsPaused && !InventoryRenderer.inventoryIsOpen)
@@ -42,6 +47,36 @@ public class PlayerController : MonoBehaviour
                 cam.orthographicSize = 5;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _animator.SetTrigger("AttackTrigger");
+            attackZone.SetActive(true);
+
+            Collider2D collider = attackZone.GetComponentInChildren<Collider2D>();
+            Vector2 offset = new Vector2();
+            offset.y = _animator.GetFloat("Vertical") * 0.5f;
+            offset.x = _animator.GetFloat("Horizontal") * 0.5f;
+            collider.offset = offset;
+            isAttack = true;
+            Invoke("HideTrigger", 0.25f);
+			_player.Attack();
+        }
+        else
+        {
+            _animator.ResetTrigger("AttackTrigger");
+        }
+    }
+
+    void HideTrigger()
+    {
+        attackZone.SetActive(false);
+        Vector2 offset = new Vector2();
+        offset.y = 0f;
+        offset.x = 0f;
+        Collider2D collider = attackZone.GetComponentInChildren<Collider2D>();
+        collider.offset = offset;
+        isAttack = false;
     }
 
     private void FixedUpdate()
@@ -49,13 +84,17 @@ public class PlayerController : MonoBehaviour
         float _speedModifier = 1f;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _speedModifier = 1.5f;
+            _speedModifier = 1.3f;
         }
         Move(_speedModifier);
     }
 
     private void Move(float _speedModifier)
     {
+        if (Player.isDead)
+        {
+            return;
+        }
         currentControlType = PlayerControlTypeHolder.ControlType;
         _direction = Vector2.zero;
 
@@ -71,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
                 // доработать
 
-                _speedModifier = _distancePercent < 0.5f ? 1f : 1.5f;
+                _speedModifier = _distancePercent < 0.5f ? 1f : 1.3f;
                 Vector2 _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _direction = _targetPosition - _rigidbody.position;
                 _direction.Normalize();
@@ -92,7 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetFloat("Vertical", _direction.y);
             _animator.SetFloat("Horizontal", _direction.x);
-            _animator.speed = _speedModifier != 1 ? 1.4f : 1f;
+            _animator.speed = _speedModifier != 1 ? 1.3f : 1f;
             Vector2 Scaler = transform.localScale;
             if (_direction.x < 0 && Scaler.x > 0)
             {

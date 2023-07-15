@@ -12,7 +12,7 @@ public class ChestTrigger : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                InventoryRenderer.Instance.OpenInventory(itemStorage, true);
+                InventoryRenderer.Inventory.OpenInventory(itemStorage, true);
             }
         }
     }

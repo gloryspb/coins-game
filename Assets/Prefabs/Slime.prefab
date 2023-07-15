@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6519141747849072088}
   m_Layer: 0
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf06d4e83adf21040ae7a4293ba80e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 3
+  detectionRadius: 10
+  haveAnimation: 0
+  HealthPoints: 2
 --- !u!95 &6519141747849072089
 Animator:
   serializedVersion: 5
@@ -231,7 +234,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 1021602189, guid: c8400668fa9b53a469885015cad1cf6e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

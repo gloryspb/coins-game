@@ -6,35 +6,35 @@ using UnityEngine.EventSystems;
 
 public class InventoryRenderer : MonoBehaviour
 {
-    public ItemsDatabase data;
     public List<ItemInventory> items = new List<ItemInventory>();
-    public GameObject gameObjShow;
-    public GameObject InventoryMainObject;
-    public GameObject InventorySecondObject;
-    public int maxCount;
-    public Camera cam;
-    public EventSystem es;
-    public int currentID;
-    public ItemInventory currentItem;
-    public RectTransform movingObject;
-    public Vector3 offset;
-    public GameObject inventoryBackground;
-    public GameObject chestBackground;
-    public static InventoryRenderer Instance;
-    private bool isSingleSelection;
-    public ItemStorage currentStorage;
-    public ItemStorage playerStorage;
     public static bool inventoryIsOpen;
-    private float currentStorageMaxWeight;
-    public Text volumeText;
-    private float currentWeight;
-    private bool storageIsFull;
+    public static InventoryRenderer Inventory;
+    [SerializeField] private ItemsDatabase data;
+    [SerializeField] private GameObject gameObjShow;
+    [SerializeField] private GameObject InventoryMainObject;
+    [SerializeField] private GameObject InventorySecondObject;
+    [SerializeField] private int maxCount;
+    [SerializeField] private Camera _cam;
+    [SerializeField] private EventSystem es;
+    private int _currentID = -1;
+    private ItemInventory _currentItem;
+    [SerializeField] private RectTransform _movingObject;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private GameObject _inventoryBackground;
+    [SerializeField] private GameObject _chestBackground;
+    private ItemStorage _currentStorage;
+    [SerializeField] private ItemStorage _playerStorage;
+    [SerializeField] private Text _volumeText;
+    private float _currentStorageMaxWeight;
+    private float _currentWeight;
+    private bool _storageIsFull;
+    private bool _isSingleSelection;
 
     public void Start()
     {
-        Instance = this;
+        Inventory = this;
         inventoryIsOpen = false;
-        currentStorageMaxWeight = 36f;
+        _currentStorageMaxWeight = 36f;
 
         if (items.Count == 0)
         {
@@ -44,32 +44,32 @@ public class InventoryRenderer : MonoBehaviour
 
     public void Update()
     {
-        if (currentID != -1)
+        if (_currentID != -1)
         {
             MoveObject();
         }
 
-        currentWeight = 0;
+        _currentWeight = 0;
         for (int i = 36; i < 72; i++)
         {
-            currentWeight += data.items[items[i].id].weight * items[i].count;
+            _currentWeight += data.items[items[i].id].weight * items[i].count;
         }
-        volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+        _volumeText.text = "Volume: " + _currentWeight.ToString() + "/" + _currentStorageMaxWeight.ToString();
         
-        if (currentItem != null && es.currentSelectedGameObject != null && inventoryIsOpen)
+        if (_currentItem != null && es.currentSelectedGameObject != null && inventoryIsOpen)
         {
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
-            if ((data.items[currentItem.id].weight * currentItem.count + currentWeight > currentStorageMaxWeight
-            && currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
-            || (currentID > 35 && data.items[II.id].weight * II.count > currentStorageMaxWeight - currentWeight 
-            && int.Parse(es.currentSelectedGameObject.name) < 36))
+            if ((data.items[_currentItem.id].weight * _currentItem.count + _currentWeight > _currentStorageMaxWeight
+            && _currentID != -1 && int.Parse(es.currentSelectedGameObject.name) > 35)
+            || (_currentID > 35 && data.items[II.id].weight * II.count > _currentStorageMaxWeight - _currentWeight 
+                                && int.Parse(es.currentSelectedGameObject.name) < 36))
             {
-                storageIsFull = true;
+                _storageIsFull = true;
             }
             else
             {
-                storageIsFull = false;
+                _storageIsFull = false;
             }
         }
     }
@@ -77,7 +77,7 @@ public class InventoryRenderer : MonoBehaviour
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)
     {
         List<ItemInventory> newItems = itemStorage.GetItems();
-        List<ItemInventory> playerItems = playerStorage.GetItems();
+        List<ItemInventory> playerItems = _playerStorage.GetItems();
         int length = items.Count / 2;
         int startIndex;
 
@@ -91,13 +91,13 @@ public class InventoryRenderer : MonoBehaviour
                 items[i].count = newItems[i - startIndex].count;
             }
 
-            currentStorage = itemStorage;
-            currentStorageMaxWeight = itemStorage.maxWeight;
-            volumeText.text = "Volume: " + currentWeight.ToString() + "/" + currentStorageMaxWeight.ToString();
+            _currentStorage = itemStorage;
+            _currentStorageMaxWeight = itemStorage.maxWeight;
+            _volumeText.text = "Volume: " + _currentWeight.ToString() + "/" + _currentStorageMaxWeight.ToString();
         }
         else
         {
-            currentStorage = null;
+            _currentStorage = null;
         }
 
         for (int i = 0; i < 36; i++)
@@ -106,32 +106,32 @@ public class InventoryRenderer : MonoBehaviour
             items[i].count = playerItems[i].count;
         }
 
-        inventoryBackground.SetActive(!inventoryBackground.activeSelf);
-        chestBackground.SetActive(isSecondInventory);
+        _inventoryBackground.SetActive(!_inventoryBackground.activeSelf);
+        _chestBackground.SetActive(isSecondInventory);
 
-        if (inventoryBackground.activeSelf)
+        if (_inventoryBackground.activeSelf)
         {
             UpdateInventory();
         }
 
-        Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
+        Time.timeScale = _inventoryBackground.activeSelf ? 0f : 1f;
         inventoryIsOpen = true;
     }
 
     public void CloseInventory()
     {
-        if (currentID != -1)
+        if (_currentID != -1)
         {
-            if (isSingleSelection)
+            if (_isSingleSelection)
             {
-                currentItem.count += items[currentID].count;
-                isSingleSelection = false;
+                _currentItem.count += items[_currentID].count;
+                _isSingleSelection = false;
             }
-            AddInventoryItem(currentID, currentItem);
-            currentID = -1;
-            movingObject.gameObject.SetActive(false);
-            currentItem.count = 0;
-            currentItem.id = 0;
+            AddInventoryItem(_currentID, _currentItem);
+            _currentID = -1;
+            _movingObject.gameObject.SetActive(false);
+            _currentItem.count = 0;
+            _currentItem.id = 0;
         }
 
         List<ItemInventory> newItems = new List<ItemInventory>();
@@ -150,30 +150,30 @@ public class InventoryRenderer : MonoBehaviour
             newItem.count = items[i].count;
             playerItems.Add(newItem);
         }
-        if (currentStorage != null)
+        if (_currentStorage != null)
         {
-            currentStorage.SetItems(newItems);
-            currentStorageMaxWeight = 36f;
+            _currentStorage.SetItems(newItems);
+            _currentStorageMaxWeight = 36f;
         }
-        playerStorage.SetItems(playerItems);
+        _playerStorage.SetItems(playerItems);
 
-        inventoryBackground.SetActive(!inventoryBackground.activeSelf);
+        _inventoryBackground.SetActive(!_inventoryBackground.activeSelf);
 
-        if (inventoryBackground.activeSelf)
+        if (_inventoryBackground.activeSelf)
         {
             UpdateInventory();
         }
         else
         {
-            chestBackground.SetActive(false);
+            _chestBackground.SetActive(false);
         }
 
-        Time.timeScale = inventoryBackground.activeSelf ? 0f : 1f;
+        Time.timeScale = _inventoryBackground.activeSelf ? 0f : 1f;
 
         inventoryIsOpen = false;
     }
 
-    public void SearchForSameItem(int id, int count)
+    private void SearchForSameItem(int id, int count)
     {
         // ищем наш предмет в инвентаре, чтобы новые предметы адекватно добавлялись
         Item item = data.items[id];
@@ -213,7 +213,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // добавляем предмет класса item в инвентарь
-    public void AddItem(int id, Item item, int count)
+    private void AddItem(int id, Item item, int count)
     {
         items[id].id = item.id;
         items[id].count = count;
@@ -230,7 +230,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // добавляем предмет класса iteminventory в инвентарь
-    public void AddInventoryItem(int id, ItemInventory invItem)
+    private void AddInventoryItem(int id, ItemInventory invItem)
     {
         items[id].id = invItem.id;
         items[id].count = invItem.count;
@@ -247,7 +247,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // добавляем префабы кнопок в инвентарь при старте
-    public void AddGraphics()
+    private void AddGraphics()
     {
         for (int i = 0; i < maxCount; i++)
         {
@@ -280,7 +280,7 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // обновляем текст количества у предметов в инвентаре и картинку
-    public void UpdateInventory()
+    private void UpdateInventory()
     {
         for (int i = 0; i < maxCount; i++)
         {
@@ -298,27 +298,27 @@ public class InventoryRenderer : MonoBehaviour
     }
 
     // при нажатии на предмет в инвентаре
-    public void SelectObject()
+    private void SelectObject()
     {
-        if (storageIsFull)
+        if (_storageIsFull)
         {
             return;
         }
 
-        if (currentID == -1 && items[int.Parse(es.currentSelectedGameObject.name)].id == 0)
+        if (_currentID == -1 && items[int.Parse(es.currentSelectedGameObject.name)].id == 0)
         {
             return;
         }
         // если предмет не выбран, мы его выбираем
-        if (currentID == -1 && !Input.GetKey(KeyCode.LeftControl))
+        if (_currentID == -1 && !Input.GetKey(KeyCode.LeftControl))
         {
-            currentID = int.Parse(es.currentSelectedGameObject.name);
-            currentItem = CopyInventoryItem(items[currentID]);
-            movingObject.gameObject.SetActive(true);
-            movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
+            _currentID = int.Parse(es.currentSelectedGameObject.name);
+            _currentItem = CopyInventoryItem(items[_currentID]);
+            _movingObject.gameObject.SetActive(true);
+            _movingObject.GetComponent<Image>().sprite = data.items[_currentItem.id].img;
 
             // заменяем наш выбранный объект на пустую ячейку
-            AddItem(currentID, data.items[0], 0);
+            AddItem(_currentID, data.items[0], 0);
         }
         else if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -328,25 +328,25 @@ public class InventoryRenderer : MonoBehaviour
                 return;
             }
 
-            if (currentItem.id != II.id && currentItem.id != 0)
+            if (_currentItem.id != II.id && _currentItem.id != 0)
             {
                 return;
             }
 
-            if (currentItem.count >= 64)
+            if (_currentItem.count >= 64)
             {
                 return;
             }
 
-            currentID = int.Parse(es.currentSelectedGameObject.name);
-            if (currentItem.id == 0)
+            _currentID = int.Parse(es.currentSelectedGameObject.name);
+            if (_currentItem.id == 0)
             {
-                currentItem = CopyInventoryItem(items[currentID]);
-                currentItem.count = 1;
+                _currentItem = CopyInventoryItem(items[_currentID]);
+                _currentItem.count = 1;
             }
             else
             {
-                currentItem.count++;
+                _currentItem.count++;
             }
 
             II.count--;
@@ -359,40 +359,40 @@ public class InventoryRenderer : MonoBehaviour
                 II.itemGameObj.GetComponentInChildren<Text>().text = "";
             }
 
-            movingObject.gameObject.SetActive(true);
-            movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
+            _movingObject.gameObject.SetActive(true);
+            _movingObject.GetComponent<Image>().sprite = data.items[_currentItem.id].img;
 
             if (II.count == 0)
             {
-                AddItem(currentID, data.items[0], 0);
+                AddItem(_currentID, data.items[0], 0);
             }
-            isSingleSelection = true;
+            _isSingleSelection = true;
         }
         else
         {
             // если предмет выбран и мы хотим сложить его в другой слот
             ItemInventory II = items[int.Parse(es.currentSelectedGameObject.name)];
 
-            if (currentItem.id != II.id)
+            if (_currentItem.id != II.id)
             {
                 // если предметы разные, меняем местами
-                if (!isSingleSelection)
+                if (!_isSingleSelection)
                 {
-                    AddInventoryItem(currentID, II);
-                    AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                    AddInventoryItem(_currentID, II);
+                    AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), _currentItem);
                 }
                 else
                 {
                     if (II.id != 0)
                     {
-                        currentItem.count += items[currentID].count;
+                        _currentItem.count += items[_currentID].count;
 
-                        AddInventoryItem(currentID, II);
-                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                        AddInventoryItem(_currentID, II);
+                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), _currentItem);
                     }
                     else
                     {
-                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+                        AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), _currentItem);
                     }
                 }
 
@@ -400,46 +400,46 @@ public class InventoryRenderer : MonoBehaviour
             else
             {
                 // если предметы одинаковые, то складываем их в одну ячейку (до 64)
-                if (II.count + currentItem.count <= 64)
+                if (II.count + _currentItem.count <= 64)
                 {
-                    II.count += currentItem.count;
+                    II.count += _currentItem.count;
                 }
                 else
                 {
-                    AddItem(currentID, data.items[II.id], II.count + currentItem.count - 64);
+                    AddItem(_currentID, data.items[II.id], II.count + _currentItem.count - 64);
                     II.count = 64;
                 }
 
                 II.itemGameObj.GetComponentInChildren<Text>().text = II.count.ToString();
             }
-            currentID = -1;
+            _currentID = -1;
 
-            movingObject.gameObject.SetActive(false);
-            currentItem.count = 0;
-            currentItem.id = 0;
-            isSingleSelection = false;
+            _movingObject.gameObject.SetActive(false);
+            _currentItem.count = 0;
+            _currentItem.id = 0;
+            _isSingleSelection = false;
         }
 
         //
-        if (currentItem.count != 0 && currentItem.count > 1)
+        if (_currentItem.count != 0 && _currentItem.count > 1)
         {
-            movingObject.GetComponentInChildren<Text>().text = currentItem.count.ToString();
+            _movingObject.GetComponentInChildren<Text>().text = _currentItem.count.ToString();
         }
         else
         {
-            movingObject.GetComponentInChildren<Text>().text = "";
+            _movingObject.GetComponentInChildren<Text>().text = "";
         }
     }
 
     // двигаем нашу картинку с предметом
-    public void MoveObject()
+    private void MoveObject()
     {
-        Vector3 pos = Input.mousePosition + offset;
+        Vector3 pos = Input.mousePosition + _offset;
         pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z + 15f;
-        movingObject.position = cam.ScreenToWorldPoint(pos);
+        _movingObject.position = _cam.ScreenToWorldPoint(pos);
     }
 
-    public ItemInventory CopyInventoryItem(ItemInventory old)
+    private ItemInventory CopyInventoryItem(ItemInventory old)
     {
         ItemInventory New = new ItemInventory();
         New.id = old.id;

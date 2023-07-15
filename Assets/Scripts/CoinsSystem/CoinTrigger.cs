@@ -23,8 +23,6 @@ public class CoinTrigger : MonoBehaviour
                 case "GoldCoin":
                     tooltipDisplay.ShowTooltip(transform);
                     break;
-
-
             }
         }
     }

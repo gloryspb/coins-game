@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class PlayerPosition : MonoBehaviour
 {
-    public Text coordinatesText;
-    public GameObject _player;
+    [SerializeField] private Text _coordinatesText;
+    [SerializeField] private GameObject _player;
 
     void Update()
     {
         Vector2 position = _player.transform.position;
-        coordinatesText.text = "X: " + Math.Round(position.x, 2) + "; Y: " + Math.Round(position.y, 2);
+        _coordinatesText.text = "X: " + Math.Round(position.x, 2) + "; Y: " + Math.Round(position.y, 2);
     }
 }

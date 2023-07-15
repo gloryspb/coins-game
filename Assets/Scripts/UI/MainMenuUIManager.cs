@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUIManager : MonoBehaviour
 {
-    public SceneLoadManager sceneLoadManager;
     public GameObject mainMenuPanel;
     public GameObject settingsPanel;
     [SerializeField] private bool isDebugVersion;
@@ -21,8 +21,9 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void Play()
     {
-        sceneLoadManager = GetComponent<SceneLoadManager>();
-        sceneLoadManager.LoadTargetScene("Game");
+        // sceneLoadManager = GetComponent<SceneLoadManager>();
+        // sceneLoadManager.LoadTargetScene("Game");
+        SceneManager.LoadScene("Game");
     }
 
     public void ShowSettingsPanel()

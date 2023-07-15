@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIEventHandler : MonoBehaviour
 {
@@ -12,13 +13,18 @@ public class UIEventHandler : MonoBehaviour
     public GameObject menuButtons;
     public GameObject exitDialogPanel;
     public GameObject settingsPanel;
-    public SceneLoadManager sceneLoadManager;
+    public GameObject deathScreen;
     public PlayerController playerController;
+    public static UIEventHandler Instance;
     [SerializeField] private bool isDebugVersion;
 
+    void Start()
+    {
+        Instance = this;
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !Player.isDead)
         {
             if (gameIsPaused)
             {
@@ -28,7 +34,7 @@ public class UIEventHandler : MonoBehaviour
             {
                 if (InventoryRenderer.inventoryIsOpen)
                 {
-                    InventoryRenderer.Instance.CloseInventory();
+                    InventoryRenderer.Inventory.CloseInventory();
                 }
                 Pause();
             }
@@ -50,6 +56,7 @@ public class UIEventHandler : MonoBehaviour
         playerUI.SetActive(true);
         exitDialogPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        deathScreen.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
@@ -62,8 +69,9 @@ public class UIEventHandler : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        sceneLoadManager = GetComponent<SceneLoadManager>();
-        sceneLoadManager.LoadTargetScene("MainMenu");
+        // sceneLoadManager = GetComponent<SceneLoadManager>();
+        // sceneLoadManager.LoadTargetScene("MainMenu");
+		SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
@@ -98,5 +106,35 @@ public class UIEventHandler : MonoBehaviour
     public void SetControlMethod(string controlTypeStr)
     {
         PlayerControlTypeHolder.ControlType = (PlayerControlTypeHolder.ControlTypeEnum)Enum.Parse(typeof(PlayerControlTypeHolder.ControlTypeEnum), controlTypeStr);  
+    }
+
+    public void DeathScreen()
+    {
+        playerUI.SetActive(false);
+        deathScreen.SetActive(true);
+        Time.timeScale = 0f;
+        gameIsPaused = true;
+    }
+
+    public void RestartScene()
+    {
+        // sceneLoadManager = GetComponent<SceneLoadManager>();
+        Resume();
+        Player.isDead = false;
+        deathScreen.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene("Game");
+    }public void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }public void LoadLevel3()
+    {
+        Resume();
+        Time.timeScale = 1f;	
+        SceneManager.LoadScene("Level3");
     }
 }
