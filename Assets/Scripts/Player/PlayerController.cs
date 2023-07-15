@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour
         {
             _speedModifier = 1.3f;
         }
+		if (_player.healthPoints < _player.maxHealthPoints * 0.35f)
+		{
+			_speedModifier *= 0.75f;
+		}
         Move(_speedModifier);
     }
 
