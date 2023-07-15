@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     private void UpdateCombatMode()
     {
         GameObject closestEnemy = FindClosestEnemy(11f);
-        Debug.Log(_isCombatMode);
+        // Debug.Log(_isCombatMode);
         if (closestEnemy != null)
         {
             if (closestEnemy.GetComponent<EnemyController>().isCombatMode == true)
