@@ -29,6 +29,7 @@ public class InventoryRenderer : MonoBehaviour
     private float _currentWeight;
     private bool _storageIsFull;
     private bool _isSingleSelection;
+	[SerializeField] private FastSlotController fs;
 
     public void Start()
     {
