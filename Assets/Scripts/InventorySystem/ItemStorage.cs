@@ -11,6 +11,7 @@ public class ItemStorage : MonoBehaviour
     private int _maxCount = 72;
     [SerializeField] private FastSlotController fs;
     [SerializeField] private bool _isPlayer;
+    [SerializeField] private ItemUsageHandler _itemUsageHandler;
 
     void Awake()
     {
@@ -37,9 +38,10 @@ public class ItemStorage : MonoBehaviour
     public void SetItems(List<ItemInventory> newItems)
     {
         items = newItems;
-        fs.OverwriteItems(items.GetRange(items.Count - 6, 6));
-        List<ItemInventory> items1 = new List<ItemInventory>();
-        items1 = items.GetRange(items.Count - 6, 6);
+        if (_isPlayer)
+        {
+            fs.OverwriteItems(items.GetRange(30, 6)); 
+        }
     }
 
     public List<ItemInventory> GetItems()
@@ -98,6 +100,24 @@ public class ItemStorage : MonoBehaviour
     {
         items[id].id = invItem.id;
         items[id].count = invItem.count;
+    }
+
+    public void UseItem(int cellId)
+    {
+        if (!_isPlayer) return;
+        
+        cellId += 30;
+        
+        if (!data.items[items[cellId].id].isUsable) return;
+        
+        items[cellId].count--;
+        _itemUsageHandler.UseItem(items[cellId].id);
+
+        if (items[cellId].count < 1)
+        {
+            items[cellId].id = 0;
+            items[cellId].count = 0;
+        }
     }
 }
 

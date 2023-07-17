@@ -16,4 +16,5 @@ public class Item
     public string name;
     public Sprite img;
     public float weight;
+    public bool isUsable;
 }

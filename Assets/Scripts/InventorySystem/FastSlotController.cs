@@ -12,6 +12,7 @@ public class FastSlotController : MonoBehaviour
     private int _activeSlot = 0;
     public List<ItemInventory> items = new List<ItemInventory>();
     [SerializeField] private ItemsDatabase data;
+    [SerializeField] private ItemStorage _playerStorage;
     
     private void Awake()
     {
@@ -37,6 +38,11 @@ public class FastSlotController : MonoBehaviour
             return;
         }
         UpdateGraphics();
+        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            UseItem();
+        }
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -121,5 +127,10 @@ public class FastSlotController : MonoBehaviour
             slotsArray[i].Find("Count").gameObject.GetComponent<Text>().text = items[i].count > 1 ? items[i].count.ToString() : "";
             
         }
+    }
+
+    private void UseItem()
+    {
+        _playerStorage.UseItem(_activeSlot);
     }
 }

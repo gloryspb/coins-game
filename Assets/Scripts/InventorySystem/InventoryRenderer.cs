@@ -30,6 +30,9 @@ public class InventoryRenderer : MonoBehaviour
     private bool _storageIsFull;
     private bool _isSingleSelection;
 	[SerializeField] private FastSlotController fs;
+    [SerializeField] private ItemUsageHandler _itemUsageHandler;
+    private float _squareSize = 100f;
+    private Rect _squareRect; 
 
     public void Start()
     {
@@ -41,6 +44,10 @@ public class InventoryRenderer : MonoBehaviour
         {
             AddGraphics();
         }
+        
+        float squareX = (Screen.width - _squareSize) / 2f;
+        float squareY = (Screen.height - _squareSize) / 2f;
+        _squareRect = new Rect(squareX, squareY, _squareSize, _squareSize);
     }
 
     public void Update()
@@ -73,6 +80,37 @@ public class InventoryRenderer : MonoBehaviour
                 _storageIsFull = false;
             }
         }
+
+        if (_currentItem != null)
+        {
+            if (Input.GetKeyDown(KeyCode.E)) // применение предмета на клавишу E
+            {
+                UseItem();
+            }
+            if (Input.GetMouseButtonDown(0) && _squareRect.Contains(Input.mousePosition))
+            {
+                UseItem(); // применение предмета при нажатии на персонажа
+            }
+        }
+    }
+
+    public void UseItem()
+    {
+        if (!data.items[_currentItem.id].isUsable) return;
+
+        _itemUsageHandler.UseItem(_currentItem.id);
+
+        _currentItem.count--;
+        _movingObject.GetComponentInChildren<Text>().text = _currentItem.count > 1 ? _currentItem.count.ToString() : "";
+        
+        if (_currentItem.count < 1)
+        {
+            _movingObject.gameObject.SetActive(false);  // можно будет потом вынести в отдельный метод
+            _currentItem.id = 0;
+            _currentID = -1;
+        }
+        
+        // также сделать какую-нить анимацию при использованиии
     }
 
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)

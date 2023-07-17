@@ -95,6 +95,12 @@ public class Player : MonoBehaviour
         // Invoke("ExitCombatMode", 5f);
     }
 
+    public void AddHealthPoints(float hp)
+    {
+        healthPoints += hp;
+        if (healthPoints > maxHealthPoints) healthPoints = maxHealthPoints;
+    }
+
     public void Attack()
     {
         // _isCombatMode = true;
