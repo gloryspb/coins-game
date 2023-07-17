@@ -38,11 +38,20 @@ public class PlayerController : MonoBehaviour
         }
         if (!UIEventHandler.gameIsPaused && !InventoryRenderer.inventoryIsOpen)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+           // if (Input.GetAxis("Mouse ScrollWheel") < 0)
+           // {
+           //     cam.orthographicSize = 7;
+           // }
+           // else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+           // {
+           //     cam.orthographicSize = 5;
+           // }
+
+			if (Input.GetKeyDown(KeyCode.Minus))
             {
                 cam.orthographicSize = 7;
             }
-            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            else if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.Plus))
             {
                 cam.orthographicSize = 5;
             }
