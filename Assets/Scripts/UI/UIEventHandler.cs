@@ -17,6 +17,7 @@ public class UIEventHandler : MonoBehaviour
     public PlayerController playerController;
     public static UIEventHandler Instance;
     [SerializeField] private bool isDebugVersion;
+    [SerializeField] private GlobalMapController _globalMapController;
 
     void Start()
     {
@@ -48,6 +49,7 @@ public class UIEventHandler : MonoBehaviour
         playerUI.SetActive(false);
         Time.timeScale = 0f;
         gameIsPaused = true;
+        // _globalMapController.HideMap();
     }
 
     public void Resume()
@@ -59,6 +61,7 @@ public class UIEventHandler : MonoBehaviour
         deathScreen.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        _globalMapController.HideMap();
     }
 
     public void Exit()
@@ -114,6 +117,7 @@ public class UIEventHandler : MonoBehaviour
         deathScreen.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
+        _globalMapController.HideMap();
     }
 
     public void RestartScene()

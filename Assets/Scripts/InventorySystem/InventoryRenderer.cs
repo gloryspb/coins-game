@@ -31,6 +31,7 @@ public class InventoryRenderer : MonoBehaviour
     private bool _isSingleSelection;
 	[SerializeField] private FastSlotController fs;
     [SerializeField] private ItemUsageHandler _itemUsageHandler;
+    [SerializeField] private GlobalMapController _globalMapController; 
     private float _squareSize = 100f;
     private Rect _squareRect; 
 
@@ -115,6 +116,7 @@ public class InventoryRenderer : MonoBehaviour
 
     public void OpenInventory(ItemStorage itemStorage, bool isSecondInventory)
     {
+        _globalMapController.HideMap();
         List<ItemInventory> newItems = itemStorage.GetItems();
         List<ItemInventory> playerItems = _playerStorage.GetItems();
         int length = items.Count / 2;
