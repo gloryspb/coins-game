@@ -118,7 +118,7 @@ public class InventoryRenderer : MonoBehaviour
     {
         _globalMapController.HideMap();
         List<ItemInventory> newItems = itemStorage.GetItems();
-        List<ItemInventory> playerItems = _playerStorage.GetItems();
+        List<ItemInventory> playerItems = PlayerStorage.instance.GetItems();
         int length = items.Count / 2;
         int startIndex;
 
@@ -196,7 +196,7 @@ public class InventoryRenderer : MonoBehaviour
             _currentStorage.SetItems(newItems);
             _currentStorageMaxWeight = 36f;
         }
-        _playerStorage.SetItems(playerItems);
+        PlayerStorage.instance.SetItems(playerItems);
 
         _inventoryBackground.SetActive(!_inventoryBackground.activeSelf);
 

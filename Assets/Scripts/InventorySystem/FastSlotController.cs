@@ -12,7 +12,7 @@ public class FastSlotController : MonoBehaviour
     private int _activeSlot = 0;
     public List<ItemInventory> items = new List<ItemInventory>();
     [SerializeField] private ItemsDatabase data;
-    [SerializeField] private ItemStorage _playerStorage;
+    // [SerializeField] private PlayerStorage _playerStorage;
     
     private void Awake()
     {
@@ -131,6 +131,6 @@ public class FastSlotController : MonoBehaviour
 
     private void UseItem()
     {
-        _playerStorage.UseItem(_activeSlot);
+        PlayerStorage.instance.UseItem(_activeSlot);
     }
 }

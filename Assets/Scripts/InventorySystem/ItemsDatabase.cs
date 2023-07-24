@@ -9,7 +9,6 @@ public class ItemsDatabase : MonoBehaviour
 }
 
 [System.Serializable]
-
 public class Item
 {
     public int id;

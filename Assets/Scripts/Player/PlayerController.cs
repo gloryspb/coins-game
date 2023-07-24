@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                InventoryRenderer.Inventory.OpenInventory(itemStorage, false);
+                InventoryRenderer.Inventory.OpenInventory(PlayerStorage.instance, false);
             }
         }
         if (!UIEventHandler.gameIsPaused && !InventoryRenderer.inventoryIsOpen)
